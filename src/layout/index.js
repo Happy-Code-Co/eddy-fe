@@ -13,7 +13,7 @@ import {
 
 import "./layout.scss";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
   return {
