@@ -1,0 +1,57 @@
+$neutral-100: #101010;
+$neutral-10: #1e1e1e;
+$neutral-20: #242424;
+$neutral-30: #383838;
+$neutral-60: #c2c2c2;
+
+$main-green: #bac887;
+$secondary-green: #d8e7a4;
+$dark-green: #3d4033;
+$error: #ff8484;
+$white: #ffffff;
+
+$gradient-green: linear-gradient(
+  0deg,
+  rgb(186, 200, 135, 0.95) 0%,
+  rgb(186, 200, 135, 0.45) 100%
+);
+
+@mixin text {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+}
+
+@mixin h1 {
+  @include text;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 120%;
+}
+
+@mixin h2 {
+  @include text;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 120%;
+}
+
+@mixin h6 {
+  @include text;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 120%;
+}
+
+@mixin label {
+  @include text;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+@mixin p {
+  @include text;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+}

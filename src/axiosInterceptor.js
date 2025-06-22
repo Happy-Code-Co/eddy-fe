@@ -1,6 +1,11 @@
 import axios from "axios";
 import { LOCAL_STORAGE } from "./consts";
 
+export const ENDPOINTS = {
+  SIGNIN: "/auth/signin",
+  SIGNUP: "/auth/signup",
+};
+
 const axiosRequest = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });

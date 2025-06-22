@@ -1,15 +1,20 @@
-import { HashRouter, Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom";
 
+import SignInPage from "../pages/Signin";
 import HomePage from "../pages/Home";
+import MainLayout from "../layout";
+import SettingsPage from "../pages/Store/Settings";
 
 const Router = () => {
   return (
-    <HashRouter>
-      {/* <BrowserRouter basename="/students-fundraising-program"> */}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </HashRouter>
+    <Routes>
+      <Route path="/" element={<SignInPage />} />
+      <Route element={<MainLayout />}>
+        <Route path="/dashboard" element={<HomePage />} />
+        <Route path="/store/settings" element={<SettingsPage />} />
+        {/* Add more routes here that need MainLayout */}
+      </Route>
+    </Routes>
   );
 };
 

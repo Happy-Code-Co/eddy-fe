@@ -1,0 +1,54 @@
+@import "../../styles/variables.scss";
+
+.sign-in {
+  display: grid;
+  grid-template-columns: 5fr 5fr;
+  align-items: center;
+
+  height: 94vh;
+  padding: 24px;
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 64px;
+
+    color: $white;
+    padding: 0 80px;
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      width: 100%;
+
+      .signin-form {
+        .submit-button {
+          width: 100%;
+        }
+      }
+
+      .title {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        p {
+          @include p;
+          color: $neutral-60;
+        }
+      }
+    }
+  }
+
+  .bg-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+
+    background: $gradient-green,
+      url("../../assets/bg/bg-1.jpg") lightgray center / cover no-repeat;
+  }
+}
