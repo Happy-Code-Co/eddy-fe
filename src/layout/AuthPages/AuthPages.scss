@@ -1,6 +1,6 @@
 @import "../../styles/variables.scss";
 
-.sign-in {
+.auth-page {
   display: grid;
   grid-template-columns: 5fr 5fr;
   align-items: center;
@@ -24,7 +24,7 @@
 
       width: 100%;
 
-      .signin-form {
+      .sign-form {
         .submit-button {
           width: 100%;
         }

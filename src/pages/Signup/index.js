@@ -1,19 +1,17 @@
 import { Button, Form, Input } from "antd";
-import { useNavigate } from "react-router-dom";
-import { LOCAL_STORAGE } from "../../consts";
 import axiosRequest, { ENDPOINTS } from "../../axiosInterceptor";
+import { LOCAL_STORAGE } from "../../consts";
 
 import AuthPages from "../../layout/AuthPages/AuthPages";
 
-const SigninPage = () => {
-  const navigate = useNavigate();
-  const login = async (values) => {
+const SignUpPage = () => {
+  const createAccount = async (values) => {
     try {
-      const response = await axiosRequest.post(ENDPOINTS.SIGNIN, {
+      const response = await axiosRequest.post(ENDPOINTS.SIGNUP, {
         ...values,
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         const { data, token } = response.data;
         localStorage.setItem(
           LOCAL_STORAGE.TOKEN,
@@ -22,25 +20,49 @@ const SigninPage = () => {
             token,
           })
         );
-        navigate(`/dashboard`);
+        //navigate(`/${data.short_id}`);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    createAccount(values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
     <AuthPages
-      title={"Hey there, welcome back!"}
-      description={"Access your dashboard and manage your store."}
+      title={"Create an account"}
+      description={"Start now for free. No credit card required."}
     >
       <Form
         className="sign-form"
         name="sign-form"
         layout="vertical"
-        onFinish={login}
-        onFinishFailed={() => {}}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
+        <Form.Item
+          label="First Name"
+          name="firstname"
+          rules={[{ required: true, message: "Please input your firstname" }]}
+        >
+          <Input placeholder="Enter your first name" />
+        </Form.Item>
+        <Form.Item
+          label="Last Name"
+          name="lastname"
+          rules={[{ required: true, message: "Please input your lastname" }]}
+        >
+          <Input placeholder="Enter your last name" />
+        </Form.Item>
         <Form.Item
           label="Email"
           name="email"
@@ -59,7 +81,7 @@ const SigninPage = () => {
 
         <Form.Item label={null}>
           <Button type="primary" htmlType="submit" className="submit-button">
-            Continue
+            Create
           </Button>
         </Form.Item>
       </Form>
@@ -67,4 +89,4 @@ const SigninPage = () => {
   );
 };
 
-export default SigninPage;
+export default SignUpPage;

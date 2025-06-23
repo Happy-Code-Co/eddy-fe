@@ -2,7 +2,7 @@ import axios from "axios";
 import { LOCAL_STORAGE } from "./consts";
 
 export const ENDPOINTS = {
-  SIGNIN: "/auth/signin",
+  SIGNIN: "/auth/login",
   SIGNUP: "/auth/signup",
 };
 
