@@ -58,7 +58,7 @@ const SignUpPage = () => {
       >
         <Form.Item
           label="First Name"
-          name="firstname"
+          name="first_name"
           tooltip="This is a required field"
           rules={[{ required: true, message: "Please input your firstname" }]}
         >
@@ -66,7 +66,7 @@ const SignUpPage = () => {
         </Form.Item>
         <Form.Item
           label="Last Name"
-          name="lastname"
+          name="last_name"
           tooltip="This is a required field"
           rules={[{ required: true, message: "Please input your lastname" }]}
         >
