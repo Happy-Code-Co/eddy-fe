@@ -25,6 +25,35 @@
       width: 100%;
 
       .sign-form {
+        .ant-input {
+          padding: 16px;
+        }
+
+        .ant-input-password {
+          background: transparent;
+          border-color: $neutral-30;
+          border-radius: 6px;
+          color: $white;
+          cursor: text;
+
+          padding: 16px !important;
+
+          &:focus,
+          &:hover {
+            border-color: $neutral-30;
+            background: $neutral-30;
+            box-shadow: none;
+          }
+
+          .ant-input-suffix .anticon {
+            color: $white;
+          }
+
+          .ant-input {
+            padding: 0 !important;
+          }
+        }
+
         .submit-button {
           width: 100%;
         }

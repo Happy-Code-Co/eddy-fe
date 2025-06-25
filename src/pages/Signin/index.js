@@ -1,28 +1,34 @@
-import { Button, Form, Input } from "antd";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { LOCAL_STORAGE } from "../../consts";
-import axiosRequest, { ENDPOINTS } from "../../axiosInterceptor";
+import { Button, Form, Input } from "antd";
+
+import useAuth from "../../hooks/useAuth";
+import { DASHBOARD } from "../../routes/list";
 
 import AuthPages from "../../layout/AuthPages/AuthPages";
+import CustomForm from "../../layout/CustomForm";
 
 const SigninPage = () => {
+  // Hooks
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const login = async (values) => {
-    try {
-      const response = await axiosRequest.post(ENDPOINTS.SIGNIN, {
-        ...values,
-      });
 
-      if (response.status === 200) {
-        const { data, token } = response.data;
-        localStorage.setItem(
-          LOCAL_STORAGE.TOKEN,
-          JSON.stringify({
-            userId: data.id,
-            token,
-          })
-        );
-        navigate(`/dashboard`);
+  useEffect(() => {
+    (async () => {
+      if (await isAuthenticated()) {
+        navigate(DASHBOARD);
+      }
+    })();
+  }, [isAuthenticated, navigate]);
+
+  const loginAction = async (values) => {
+    try {
+      const result = await login(values);
+      if (result.success) {
+        navigate(DASHBOARD);
+      } else {
+        // Optionally handle error, e.g., show message
+        console.log(result.error);
       }
     } catch (error) {
       console.log(error);
@@ -33,17 +39,18 @@ const SigninPage = () => {
       title={"Hey there, welcome back!"}
       description={"Access your dashboard and manage your store."}
     >
-      <Form
+      <CustomForm
         className="sign-form"
         name="sign-form"
         layout="vertical"
-        onFinish={login}
+        onFinish={loginAction}
         onFinishFailed={() => {}}
         autoComplete="off"
       >
         <Form.Item
           label="Email"
           name="email"
+          tooltip="This is a required field"
           rules={[{ required: true, message: "Please input your email" }]}
         >
           <Input placeholder="Enter your email" />
@@ -52,6 +59,7 @@ const SigninPage = () => {
         <Form.Item
           label="Password"
           name="password"
+          tooltip="This is a required field"
           rules={[{ required: true, message: "Please input your password" }]}
         >
           <Input.Password placeholder="Enter a password" />
@@ -62,7 +70,7 @@ const SigninPage = () => {
             Continue
           </Button>
         </Form.Item>
-      </Form>
+      </CustomForm>
     </AuthPages>
   );
 };
