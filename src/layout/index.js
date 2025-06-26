@@ -10,8 +10,10 @@ import {
   TagOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 import "./layout.scss";
+import useAuth from "../hooks/useAuth";
 
 const { Header, Content, Sider } = Layout;
 
@@ -45,6 +47,14 @@ const items = [
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
   return (
     <Layout className="layout">
       <Sider
@@ -74,6 +84,13 @@ const MainLayout = () => {
             <div className="account-info">
               <p>Usuario</p>
             </div>
+            <Button
+              type="secondary"
+              onClick={handleLogout}
+              style={{ color: "#fff", marginLeft: 8 }}
+            >
+              Logout
+            </Button>
           </div>
         </Header>
         <Content className="content">

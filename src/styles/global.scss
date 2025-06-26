@@ -131,3 +131,29 @@ ol {
     color: $neutral-60;
   }
 }
+
+.ant-radio-button-wrapper {
+  padding: 16px 20px;
+  height: fit-content;
+
+  background: transparent;
+  border-color: $neutral-30;
+  color: $white;
+
+  border-inline-start: 1px solid $neutral-30 !important;
+
+  &::before {
+    content: none !important;
+    display: none;
+  }
+
+  &:hover {
+    background: $neutral-30 !important;
+    color: $white !important;
+  }
+
+  &.ant-radio-button-wrapper-checked {
+    background: $dark-green !important;
+    border-color: $main-green !important;
+  }
+}

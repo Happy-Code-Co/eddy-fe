@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setAccountInfo } from "../redux/slices/AuthSlice";
 import axiosRequest, { ENDPOINTS } from "../axiosInterceptor";
+
+import { setAccountInfo } from "../redux/slices/AuthSlice";
+import { setStoreInfo } from "../redux/slices/StoreSlice";
 
 const useAuth = () => {
   const dispatch = useDispatch();
@@ -16,8 +18,10 @@ const useAuth = () => {
       const response = await axiosRequest.get("/auth/me", {
         withCredentials: true,
       });
-      if (response.status === 200 && response.data) {
-        dispatch(setAccountInfo(response.data));
+      if (response.status === 200) {
+        const { data } = response.data;
+        dispatch(setAccountInfo(data));
+        dispatch(setStoreInfo(data));
         return true;
       }
     } catch (e) {
@@ -35,6 +39,7 @@ const useAuth = () => {
       if (response.status === 201) {
         const { data } = response.data;
         dispatch(setAccountInfo(data));
+        dispatch(setStoreInfo(data.store));
         return { success: true };
       } else {
         return { success: false, error: "Invalid response from server" };
@@ -54,7 +59,10 @@ const useAuth = () => {
       });
       if (response.status === 200) {
         const { data } = response.data;
+        console.log(data);
+
         dispatch(setAccountInfo(data));
+        dispatch(setStoreInfo(data));
         return { success: true };
       } else {
         return { success: false, error: "Invalid response from server" };
@@ -66,9 +74,14 @@ const useAuth = () => {
     }
   };
 
-  const logout = () => {
-    // Logic to log out the user
-    localStorage.removeItem("authToken");
+  const logout = async () => {
+    try {
+      await axiosRequest.post("/auth/logout", {}, { withCredentials: true });
+    } catch (error) {
+      // Optionally handle error
+    }
+    /* dispatch(setAccountInfo({}));
+    dispatch(setStoreInfo({})); */
   };
 
   return {

@@ -20,3 +20,15 @@ ol,
 ul {
   margin: 0;
 }
+
+h1 {
+  @include h1;
+}
+
+h2 {
+  @include h2;
+}
+
+h6 {
+  @include h6;
+}

@@ -1,0 +1,46 @@
+@import "../../../../styles/_variables.scss";
+
+.onboarding-view {
+  background: $neutral-10;
+  border: 1px solid $neutral-30;
+  border-radius: 12px;
+  box-shadow: $shadow-1;
+
+  padding: 40px;
+  color: $white;
+
+  .wizard {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+
+      .step-header {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .step-content {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        .instructions {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+      }
+    }
+    .navigation-buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}

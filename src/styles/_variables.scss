@@ -16,6 +16,8 @@ $gradient-green: linear-gradient(
   rgb(186, 200, 135, 0.45) 100%
 );
 
+$shadow-1: 4px 4px 40px 0px rgba(0, 0, 0, 0.06);
+
 @mixin text {
   font-family: "Inter", sans-serif;
   font-style: normal;

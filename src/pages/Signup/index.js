@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 
 import useAuth from "../../hooks/useAuth";
-import { DASHBOARD } from "../../routes/list";
+import { ACCOUNT_ONBOARDING, DASHBOARD } from "../../routes/list";
 
 import AuthPages from "../../layout/AuthPages/AuthPages";
 import CustomForm from "../../layout/CustomForm";
@@ -24,19 +24,11 @@ const SignUpPage = () => {
     try {
       const result = await register(values);
       if (result.success) {
-        navigate(DASHBOARD);
-      } else {
-        // Optionally handle error, e.g., show message
-        console.log(result.error);
+        navigate(ACCOUNT_ONBOARDING);
       }
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    createAccount(values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -52,7 +44,7 @@ const SignUpPage = () => {
         className="sign-form"
         name="sign-form"
         layout="vertical"
-        onFinish={onFinish}
+        onFinish={createAccount}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
