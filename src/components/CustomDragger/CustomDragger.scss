@@ -1,0 +1,10 @@
+@import "../../styles/_variables.scss";
+
+.custom-dragger {
+  .ant-upload {
+    p.ant-upload-text,
+    p.ant-upload-hint {
+      color: $white;
+    }
+  }
+}
