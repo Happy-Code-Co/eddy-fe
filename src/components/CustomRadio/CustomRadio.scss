@@ -1,0 +1,57 @@
+.custom-radio {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+
+  .ant-radio-wrapper {
+    width: 100%;
+    background-color: transparent;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    border-radius: 6px;
+    padding: 1rem;
+    border: 1px solid #383838;
+    color: #c2c2c2;
+    font-size: 1rem;
+    position: relative;
+
+    &:hover {
+      border-color: #bac887;
+    }
+
+    .ant-radio {
+      &::before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: #383838;
+        border: 1px solid #bac887;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+      }
+    }
+
+    &.ant-radio-wrapper-checked {
+      background-color: #3d4033;
+      border-color: #bac887;
+
+      &:hover {
+        border-color: #bac887;
+      }
+
+      .ant-radio {
+        &::before {
+          background-color: #bac887;
+          background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%20viewBox='0%200%2012%2012'%20fill='none'%3E%3Cpath%20d='M10.7655%203.64034L4.76552%209.64034C4.73069%209.6752%204.68934%209.70286%204.64381%209.72174C4.59829%209.74061%204.54949%209.75032%204.50021%209.75032C4.45093%209.75032%204.40213%209.74061%204.35661%209.72174C4.31108%209.70286%204.26972%209.6752%204.2349%209.64034L1.6099%207.01534C1.53953%206.94497%201.5%206.84954%201.5%206.75003C1.5%206.65051%201.53953%206.55508%201.6099%206.48471C1.68026%206.41435%201.7757%206.37482%201.87521%206.37482C1.97472%206.37482%202.07016%206.41435%202.14052%206.48471L4.50021%208.84487L10.2349%203.10971C10.3053%203.03935%2010.4007%202.99982%2010.5002%202.99982C10.5997%202.99982%2010.6952%203.03935%2010.7655%203.10971C10.8359%203.18008%2010.8754%203.27551%2010.8754%203.37503C10.8754%203.47454%2010.8359%203.56997%2010.7655%203.64034Z'%20fill='%23101010'/%3E%3C/svg%3E");
+          border-color: #bac887;
+          z-index: 1;
+          background-position-x: 1px;
+          background-position-y: 1px;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+}

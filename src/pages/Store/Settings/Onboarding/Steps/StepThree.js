@@ -1,12 +1,21 @@
-import { Form, Input, Checkbox } from "antd";
+import React, { useState } from "react";
+import { Form, Input } from "antd";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 import CustomForm from "../../../../../layout/CustomForm";
-import CustomCheckbox from "../../../../../components/CustomCheckbox";
+import CustomRadio from "../../../../../components/CustomRadio";
 
 const StepThree = () => {
+  const [keyType, setKeyType] = useState("public_key");
+
   const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
+    setKeyType(e.target.value);
+    console.log("Selected Key Type:", e.target.value);
   };
+
+  const keyTypes = [
+    { label: "Llave publica", value: "public_key" },
+    { label: "Llave privada", value: "private_key" },
+  ];
 
   return (
     <div className="step">
@@ -24,18 +33,19 @@ const StepThree = () => {
         </div>
 
         <CustomForm layout="vertical">
-          <Form.Item label="Public Key" required>
+          <Form.Item label="Llave publica" required>
             <Input size="large" placeholder="pub_prod_ABC123..." />
           </Form.Item>
-          <Form.Item label="Private Key" required>
+          <Form.Item label="Llave privada" required>
             <Input size="large" placeholder="pub_prod_ABC123..." />
           </Form.Item>
 
-          <Form.Item label="Private Key" required>
-            <CustomCheckbox onchange={onChange}>Producción</CustomCheckbox>
-            <CustomCheckbox onchange={onChange}>
-              Sandbox / Pruebas
-            </CustomCheckbox>
+          <Form.Item label="Tipo de llave" required>
+            <CustomRadio
+              options={keyTypes}
+              onchange={onChange}
+              value={keyType}
+            />
           </Form.Item>
         </CustomForm>
       </div>
