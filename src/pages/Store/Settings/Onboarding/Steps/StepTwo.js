@@ -3,14 +3,12 @@ import CustomForm from "../../../../../layout/CustomForm";
 import Dragger from "antd/es/upload/Dragger";
 import { InboxOutlined } from "@ant-design/icons";
 import CustomDragger from "../../../../../components/CustomDragger";
+import StepHeader from "../../../../../components/Steps/StepHeader";
 
 const StepTwo = () => {
   return (
     <div className="step">
-      <div className="step-header">
-        <label>Paso 2 de 9</label>
-        <h2>Nombre y Marca</h2>
-      </div>
+      <StepHeader stepLabel={"Paso 2 de 5"} title={"Nombre y Marca"} />
       <div className="step-content">
         <div className="instructions">
           <h6>Define tu identidad</h6>

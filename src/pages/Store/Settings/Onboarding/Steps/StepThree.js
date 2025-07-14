@@ -20,7 +20,7 @@ const StepThree = () => {
   return (
     <div className="step">
       <StepHeader
-        stepLabel={"Paso 3 de 9"}
+        stepLabel={"Paso 3 de 5"}
         title={"Métodos de Pago — Integración con Wompi"}
       ></StepHeader>
       <div className="step-content">

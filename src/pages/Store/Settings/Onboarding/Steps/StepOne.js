@@ -1,4 +1,5 @@
 import { Radio } from "antd";
+import StepHeader from "../../../../../components/Steps/StepHeader";
 
 const StepOne = () => {
   const options = [
@@ -7,10 +8,7 @@ const StepOne = () => {
   ];
   return (
     <div className="step">
-      <div className="step-header">
-        <label>Paso 1 de 9</label>
-        <h2>Configuración Rápida</h2>
-      </div>
+      <StepHeader stepLabel={"Paso 1 de 5"} title={"Configuración Rápida"} />
       <div className="step-content">
         <div className="instructions">
           <h6>¿En qué etapa está tu negocio?</h6>
