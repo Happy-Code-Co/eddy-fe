@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "../components/Icons";
-import { Button, Input, Layout, Menu } from "antd";
+import { Button, Input, Layout, Menu, Switch } from "antd";
 import {
   AppstoreFilled,
   BellFilled,
@@ -10,53 +10,72 @@ import {
   TagOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-
 import "./layout.scss";
 import useAuth from "../hooks/useAuth";
 
 const { Header, Content, Sider } = Layout;
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-const items = [
-  getItem("Inicio", "1", <AppstoreFilled />),
-  getItem("Mi tienda", "sub1", <HomeOutlined />, [
-    getItem("Contenido", "3"),
-    getItem("Ajustes", "4"),
-  ]),
-  getItem("Productos", "sub2", <TagOutlined />, [
-    getItem("Item 1", "6"),
-    getItem("Item 2", "8"),
-  ]),
-  getItem("Ordenes", "sub3", <InboxOutlined />, [
-    getItem("Item 1", "6"),
-    getItem("Item 2", "8"),
-  ]),
-  getItem("Clientes", "sub4", <TeamOutlined />, [
-    getItem("Item 1", "6"),
-    getItem("Item 2", "8"),
-  ]),
+const menuItems = [
+  {
+    label: "Inicio",
+    key: "/dashboard",
+    icon: <AppstoreFilled />,
+  },
+  {
+    label: "Mi tienda",
+    key: "/store",
+    icon: <HomeOutlined />,
+    children: [
+      { label: "Contenido", key: "/store/content" },
+      { label: "Ajustes", key: "/store/settings" },
+    ],
+  },
+  {
+    label: "Productos",
+    key: "/products",
+    icon: <TagOutlined />,
+    children: [
+      { label: "Item 1", key: "/products/item1" },
+      { label: "Item 2", key: "/products/item2" },
+    ],
+  },
+  {
+    label: "Ordenes",
+    key: "/orders",
+    icon: <InboxOutlined />,
+    children: [
+      { label: "Item 1", key: "/orders/item1" },
+      { label: "Item 2", key: "/orders/item2" },
+    ],
+  },
+  {
+    label: "Clientes",
+    key: "/clients",
+    icon: <TeamOutlined />,
+    children: [
+      { label: "Item 1", key: "/clients/item1" },
+      { label: "Item 2", key: "/clients/item2" },
+    ],
+  },
 ];
 
-const MainLayout = () => {
+const MainLayout = ({ setIsDark, isDark }) => {
   const [collapsed, setCollapsed] = useState(false);
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     await logout();
     navigate("/login");
   };
 
+  const onMenuClick = ({ key }) => {
+    navigate(key);
+  };
+
   return (
-    <Layout className="layout">
+    <Layout className={`layout${isDark ? "" : " light"}`}>
       <Sider
         collapsible
         className="side-menu"
@@ -66,11 +85,20 @@ const MainLayout = () => {
       >
         <Logo className="logo" />
         <Menu
-          theme="dark"
+          theme={isDark ? "dark" : "light"}
           mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={items}
+          selectedKeys={[location.pathname]}
+          items={menuItems}
+          onClick={onMenuClick}
         />
+        <div style={{ padding: 16, textAlign: "center" }}>
+          <Switch
+            checked={isDark}
+            onChange={setIsDark}
+            checkedChildren="🌙"
+            unCheckedChildren="☀️"
+          />
+        </div>
       </Sider>
       <Layout className="content-layout">
         <Header className="layout-header">
@@ -87,7 +115,7 @@ const MainLayout = () => {
             <Button
               type="secondary"
               onClick={handleLogout}
-              style={{ color: "#fff", marginLeft: 8 }}
+              style={{ color: isDark ? "#fff" : "#222", marginLeft: 8 }}
             >
               Logout
             </Button>

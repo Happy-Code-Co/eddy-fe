@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 
 import useAuth from "../../hooks/useAuth";
-import { ACCOUNT_ONBOARDING, DASHBOARD } from "../../routes/list";
+import { STORE_ONBOARDING, DASHBOARD } from "../../routes/list";
 
 import AuthPages from "../../layout/AuthPages/AuthPages";
 import CustomForm from "../../layout/CustomForm";
@@ -24,7 +24,7 @@ const SignUpPage = () => {
     try {
       const result = await register(values);
       if (result.success) {
-        navigate(ACCOUNT_ONBOARDING);
+        navigate(STORE_ONBOARDING);
       }
     } catch (error) {
       console.log(error);

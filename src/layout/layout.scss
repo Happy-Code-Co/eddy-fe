@@ -2,8 +2,45 @@
 
 .layout {
   min-height: 100vh;
+
+  &.light {
+    background: $light-bg;
+
+    .side-menu {
+      background-color: $light-content;
+
+      .ant-layout-sider-children {
+        .logo {
+          filter: none;
+        }
+
+        .ant-menu {
+          background: transparent;
+          color: $light-text;
+        }
+      }
+    }
+
+    .content-layout {
+      background: $light-secondary;
+
+      .layout-header {
+        background: $light-content;
+        color: $light-text;
+      }
+
+      .content {
+        color: $light-text;
+        background: $light-content;
+        border-radius: 12px;
+        box-shadow: $shadow-1;
+      }
+    }
+  }
+
   .side-menu {
     background-color: $neutral-10;
+
     .ant-layout-sider-children {
       display: flex;
       flex-direction: column;
