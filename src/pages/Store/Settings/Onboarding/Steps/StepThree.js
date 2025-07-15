@@ -1,15 +1,32 @@
+// StepThree.js
 import React, { useState } from "react";
-import { Form, Input } from "antd";
+import { Form, Input, Button } from "antd";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 import CustomForm from "../../../../../layout/CustomForm";
 import CustomRadio from "../../../../../components/CustomRadio";
 
-const StepThree = () => {
+const StepThree = ({
+  formData,
+  updateFormData,
+  testConnection,
+  isConnectionSuccess,
+}) => {
   const [keyType, setKeyType] = useState("public_key");
+  const [isTesting, setIsTesting] = useState(false);
 
   const onChange = (e) => {
     setKeyType(e.target.value);
-    console.log("Selected Key Type:", e.target.value);
+    updateFormData({ keyType: e.target.value });
+  };
+
+  const handleInputChange = (field) => (e) => {
+    updateFormData({ [field]: e.target.value });
+  };
+
+  const handleTestConnection = async () => {
+    setIsTesting(true);
+    await testConnection();
+    setIsTesting(false);
   };
 
   const keyTypes = [
@@ -34,10 +51,20 @@ const StepThree = () => {
 
         <CustomForm layout="vertical">
           <Form.Item label="Llave publica" required>
-            <Input size="large" placeholder="pub_prod_ABC123..." />
+            <Input
+              size="large"
+              placeholder="pub_prod_ABC123..."
+              value={formData.publicKey}
+              onChange={handleInputChange("publicKey")}
+            />
           </Form.Item>
           <Form.Item label="Llave privada" required>
-            <Input size="large" placeholder="pub_prod_ABC123..." />
+            <Input
+              size="large"
+              placeholder="pub_prod_ABC123..."
+              value={formData.privateKey}
+              onChange={handleInputChange("privateKey")}
+            />
           </Form.Item>
 
           <Form.Item label="Tipo de llave" required>
@@ -47,6 +74,15 @@ const StepThree = () => {
               value={keyType}
             />
           </Form.Item>
+
+          <Button
+            type="primary"
+            onClick={handleTestConnection}
+            loading={isTesting}
+            disabled={!formData.publicKey || !formData.privateKey}
+          >
+            Probar Conexión
+          </Button>
         </CustomForm>
       </div>
     </div>
