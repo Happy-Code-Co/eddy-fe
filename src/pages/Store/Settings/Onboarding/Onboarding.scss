@@ -30,6 +30,11 @@
         flex-direction: column;
         gap: 24px;
 
+        &.step-five-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+
         .instructions {
           display: flex;
           flex-direction: column;
