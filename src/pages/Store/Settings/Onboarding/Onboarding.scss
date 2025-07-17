@@ -48,3 +48,42 @@
     }
   }
 }
+
+.ant-modal.onboarding-success-modal {
+  .ant-modal-content {
+    background-color: $neutral-10;
+    color: $white;
+
+    .success-message {
+      background-color: $dark-green;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  .ant-modal-title {
+    background-color: $neutral-10;
+    color: $white;
+  }
+
+  .ant-modal-body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    img {
+      max-width: 250px;
+      margin: auto;
+    }
+  }
+
+  .ant-modal-footer {
+    margin-top: 40px;
+    .ant-btn {
+      width: 100%;
+    }
+  }
+}

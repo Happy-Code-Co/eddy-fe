@@ -7,6 +7,7 @@ import StepTwo from "./Steps/StepTwo";
 import StepThree from "./Steps/StepThree";
 import StepFour from "./Steps/StepFour";
 import StepFive from "./Steps/StepFive";
+import done from "../../../../assets/ui/done.svg";
 
 const OnboardingView = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -49,16 +50,13 @@ const OnboardingView = () => {
 
   async function testConnection() {
     try {
-      // Simulate API call
-      const response = await fetch("your-api-endpoint", {
-        method: "POST",
-        body: JSON.stringify({
-          publicKey: formData.publicKey,
-          privateKey: formData.privateKey,
-        }),
-      });
+      // Simular un delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      if (response.ok) {
+      // Si deseamos que sea exitosa la simulacion
+      const success = true;
+
+      if (success) {
         setIsConnectionSuccess(true);
         setIsModalVisible(true);
         return true;
@@ -123,9 +121,18 @@ const OnboardingView = () => {
         title="Conexión Exitosa"
         visible={isModalVisible}
         onOk={() => setIsModalVisible(false)}
-        onCancel={() => setIsModalVisible(false)}
+        cancelButtonProps={{ style: { display: "none" } }}
+        okText="Guardar y continuar"
+        className="onboarding-success-modal"
       >
-        <p>La conexión con Wompi se ha establecido correctamente.</p>
+        <img src={done} alt="Success Icon" />
+        <div className="success-message">
+          <h3>Tus credenciales están seguras.</h3>
+          <p>
+            Las usamos únicamente para conectar tu tienda con Wompi y no serán
+            compartidas con terceros.
+          </p>
+        </div>
       </Modal>
     </div>
   );

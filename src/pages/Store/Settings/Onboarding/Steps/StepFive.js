@@ -4,7 +4,6 @@ import { Button } from "antd";
 const StepFive = ({ formData }) => {
   const handleFinish = () => {
     console.log("Final form data:", formData);
-    // Here you would typically send the formData to your backend
   };
 
   return (
