@@ -60,8 +60,11 @@ const OnboardingView = () => {
         setIsConnectionSuccess(true);
         setIsModalVisible(true);
         return true;
+      } else {
+        setIsConnectionSuccess(false);
+        setIsModalVisible(true);
+        return true;
       }
-      return false;
     } catch (error) {
       console.error("Connection test failed:", error);
       return false;
@@ -118,19 +121,42 @@ const OnboardingView = () => {
       </div>
 
       <Modal
-        title="Conexión Exitosa"
+        title={isConnectionSuccess ? "Conexión Exitosa" : "Error de Conexión"}
         visible={isModalVisible}
         onOk={() => setIsModalVisible(false)}
+        okButtonProps={
+          isConnectionSuccess ? {} : { danger: true, type: "secondary" }
+        }
         cancelButtonProps={{ style: { display: "none" } }}
-        okText="Guardar y continuar"
-        className="onboarding-success-modal"
+        okText={isConnectionSuccess ? "Guardar y continuar" : "Reintentar"}
+        className={
+          isConnectionSuccess
+            ? "onboarding-success-modal"
+            : "onboarding-success-modal onboarding-error-modal"
+        }
       >
-        <img src={done} alt="Success Icon" />
-        <div className="success-message">
-          <h3>Tus credenciales están seguras.</h3>
+        {isConnectionSuccess ? (
+          <img src={done} alt="Success Icon" />
+        ) : (
+          <div className="error-icon">!</div>
+        )}
+
+        <div
+          className={
+            isConnectionSuccess
+              ? "message success-message"
+              : "message error-message"
+          }
+        >
+          {isConnectionSuccess ? (
+            <h3>Tus credenciales están seguras.</h3>
+          ) : (
+            <h3>Hubo un error al conectar tu tienda</h3>
+          )}
           <p>
-            Las usamos únicamente para conectar tu tienda con Wompi y no serán
-            compartidas con terceros.
+            {isConnectionSuccess
+              ? "Las usamos únicamente para conectar tu tienda con Wompi y no serán compartidas con terceros."
+              : "Por favor, verifica tus credenciales y vuelve a intentarlo."}
           </p>
         </div>
       </Modal>
