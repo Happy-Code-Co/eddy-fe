@@ -5,14 +5,8 @@ import StepHeader from "../../../../../components/Steps/StepHeader";
 import CustomForm from "../../../../../layout/CustomForm";
 import CustomRadio from "../../../../../components/CustomRadio";
 
-const StepThree = ({
-  formData,
-  updateFormData,
-  testConnection,
-  isConnectionSuccess,
-}) => {
+const StepThree = ({ formData, updateFormData }) => {
   const [keyType, setKeyType] = useState("public_key");
-  const [isTesting, setIsTesting] = useState(false);
 
   const onChange = (e) => {
     setKeyType(e.target.value);
@@ -21,12 +15,6 @@ const StepThree = ({
 
   const handleInputChange = (field) => (e) => {
     updateFormData({ [field]: e.target.value });
-  };
-
-  const handleTestConnection = async () => {
-    setIsTesting(true);
-    await testConnection();
-    setIsTesting(false);
   };
 
   const keyTypes = [
@@ -74,15 +62,6 @@ const StepThree = ({
               value={keyType}
             />
           </Form.Item>
-
-          <Button
-            type="primary"
-            onClick={handleTestConnection}
-            loading={isTesting}
-            disabled={!formData.publicKey || !formData.privateKey}
-          >
-            Probar Conexión
-          </Button>
         </CustomForm>
       </div>
     </div>

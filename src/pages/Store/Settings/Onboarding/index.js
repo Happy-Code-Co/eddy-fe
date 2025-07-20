@@ -1,6 +1,6 @@
 // index.js
 import { Button, Modal } from "antd";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./Onboarding.scss";
 import StepOne from "./Steps/StepOne";
 import StepTwo from "./Steps/StepTwo";
@@ -74,6 +74,7 @@ const OnboardingView = () => {
   const handleNext = async () => {
     try {
       const currentForm = formRefs[currentStep]?.current;
+      console.log("Validating form for step:", currentStep + 1);
 
       if (currentForm) {
         await currentForm.validateFields();
@@ -99,6 +100,10 @@ const OnboardingView = () => {
       setCurrentStep((prev) => prev - 1);
     }
   };
+
+  useEffect(() => {
+    console.log("Form data:", formData);
+  }, [currentStep, formData]);
 
   return (
     <div className="onboarding-view">

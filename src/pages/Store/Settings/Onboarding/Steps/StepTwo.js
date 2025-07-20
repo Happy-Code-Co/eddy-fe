@@ -1,14 +1,13 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import { Form, Input } from "antd";
 import CustomForm from "../../../../../layout/CustomForm";
 import CustomDragger from "../../../../../components/CustomDragger";
 import StepHeader from "../../../../../components/Steps/StepHeader";
-import { forwardRef } from "react";
 
-const StepTwo = ({ formData, updateFormData }, ref) => {
+const StepTwo = forwardRef(({ formData, updateFormData }, ref) => {
   const [form] = Form.useForm();
 
-  React.useImperativeHandle(ref, () => ({
+  useImperativeHandle(ref, () => ({
     validateFields: () => form.validateFields(),
   }));
 
@@ -49,13 +48,13 @@ const StepTwo = ({ formData, updateFormData }, ref) => {
           <Form.Item label="Logo (Subida de imagen)" required>
             <CustomDragger />
           </Form.Item>
-          <Form.Item label="Favicon (opcional)" required>
+          <Form.Item label="Favicon (opcional)">
             <CustomDragger />
           </Form.Item>
         </CustomForm>
       </div>
     </div>
   );
-};
+});
 
-export default forwardRef(StepTwo);
+export default StepTwo;

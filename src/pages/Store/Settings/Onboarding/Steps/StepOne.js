@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Radio } from "antd";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 
@@ -8,14 +8,15 @@ const StepOne = ({ formData, updateFormData }) => {
     { label: "Ya estoy vendiendo online o en persona", value: "operational" },
   ];
 
-  const [businessStage, setBusinessStage] = useState(
-    formData.businessStage || "starting"
-  );
-
   const handleChange = (e) => {
     updateFormData({ businessStage: e.target.value });
-    setBusinessStage(e.target.value);
   };
+
+  useEffect(() => {
+    if (!formData.businessStage) {
+      updateFormData({ businessStage: "starting" });
+    }
+  }, []);
 
   return (
     <div className="step">
@@ -29,7 +30,7 @@ const StepOne = ({ formData, updateFormData }) => {
         <Radio.Group
           block
           options={options}
-          value={businessStage}
+          value={formData.businessStage || "starting"}
           onChange={handleChange}
           optionType="button"
           buttonStyle="solid"

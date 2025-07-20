@@ -4,12 +4,12 @@ import StepHeader from "../../../../../components/Steps/StepHeader";
 import CustomForm from "../../../../../layout/CustomForm";
 import CustomCheckbox from "../../../../../components/CustomChecbox";
 
-const StepFour = () => {
+const StepFour = ({ formData, updateFormData }) => {
   const [deliveryType, setDeliveryType] = useState(["delivery"]);
 
   const onChange = (e) => {
     setDeliveryType(e);
-    console.log("Selected delivery types: ", e);
+    updateFormData({ deliveryType: e });
   };
 
   const deliveryTypes = [
