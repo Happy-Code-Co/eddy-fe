@@ -1,4 +1,4 @@
-import { useState, forwardRef, useImperativeHandle } from "react";
+import { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { Form, Input } from "antd";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 import CustomForm from "../../../../../layout/CustomForm";
@@ -25,6 +25,10 @@ const StepThree = forwardRef(({ formData, updateFormData }, ref) => {
     { label: "Llave publica", value: "public_key" },
     { label: "Llave privada", value: "private_key" },
   ];
+
+  useEffect(() => {
+    updateFormData({ keyType });
+  }, []);
 
   return (
     <div className="step">

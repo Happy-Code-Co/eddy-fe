@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "antd";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 import CustomForm from "../../../../../layout/CustomForm";
@@ -21,6 +21,10 @@ const StepFour = ({ formData, updateFormData }) => {
     },
     { label: "Retiro en tienda o punto de entrega", value: "pickup_point" },
   ];
+
+  useEffect(() => {
+    updateFormData({ deliveryType });
+  }, []);
 
   return (
     <div className="step">

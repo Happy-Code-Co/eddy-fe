@@ -4,6 +4,7 @@ import StepHeader from "../../../../../components/Steps/StepHeader";
 
 const StepOne = forwardRef(({ formData, updateFormData }, ref) => {
   const [form] = Form.useForm();
+
   const options = [
     { label: "Estoy empezando, no tengo ventas", value: "starting" },
     { label: "Ya estoy vendiendo online o en persona", value: "operational" },
