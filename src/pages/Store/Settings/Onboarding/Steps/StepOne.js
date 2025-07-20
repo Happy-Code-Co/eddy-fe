@@ -1,12 +1,17 @@
-import { useEffect } from "react";
-import { Radio } from "antd";
+import { useEffect, forwardRef, useImperativeHandle } from "react";
+import { Form, Radio } from "antd";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 
-const StepOne = ({ formData, updateFormData }) => {
+const StepOne = forwardRef(({ formData, updateFormData }, ref) => {
+  const [form] = Form.useForm();
   const options = [
     { label: "Estoy empezando, no tengo ventas", value: "starting" },
     { label: "Ya estoy vendiendo online o en persona", value: "operational" },
   ];
+
+  useImperativeHandle(ref, () => ({
+    validateFields: () => form.validateFields(),
+  }));
 
   const handleChange = (e) => {
     updateFormData({ businessStage: e.target.value });
@@ -38,6 +43,6 @@ const StepOne = ({ formData, updateFormData }) => {
       </div>
     </div>
   );
-};
+});
 
 export default StepOne;

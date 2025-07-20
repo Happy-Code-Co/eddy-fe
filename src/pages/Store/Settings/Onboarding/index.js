@@ -1,4 +1,3 @@
-// index.js
 import { Button, Modal } from "antd";
 import { useState, useRef, useEffect } from "react";
 import "./Onboarding.scss";
@@ -16,33 +15,41 @@ const OnboardingView = () => {
   const [isConnectionSuccess, setIsConnectionSuccess] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  // Test connection simulation set true for success, false for failure
+  // const isSuccess = false;
+  const isSuccess = Math.random() > 0.5; // Randomly simulate success or failure
+
   // Refs for each step's form
   const formRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
   const steps = [
     <StepOne
+      key="step1"
       formData={formData}
       updateFormData={updateFormData}
-      formRef={formRefs[0]}
+      ref={formRefs[0]}
     />,
     <StepTwo
+      key="step2"
       formData={formData}
       updateFormData={updateFormData}
-      formRef={formRefs[1]}
+      ref={formRefs[1]}
     />,
     <StepThree
+      key="step3"
       formData={formData}
       updateFormData={updateFormData}
       testConnection={testConnection}
       isConnectionSuccess={isConnectionSuccess}
-      formRef={formRefs[2]}
+      ref={formRefs[2]}
     />,
     <StepFour
+      key="step4"
       formData={formData}
       updateFormData={updateFormData}
-      formRef={formRefs[3]}
+      ref={formRefs[3]}
     />,
-    <StepFive formData={formData} />,
+    <StepFive key="step5" formData={formData} />,
   ];
 
   function updateFormData(newData) {
@@ -55,16 +62,15 @@ const OnboardingView = () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Si deseamos que sea exitosa la simulacion
-      const success = true;
 
-      if (success) {
+      if (isSuccess) {
         setIsConnectionSuccess(true);
         setIsModalVisible(true);
         return true;
       } else {
         setIsConnectionSuccess(false);
         setIsModalVisible(true);
-        return true;
+        return false;
       }
     } catch (error) {
       console.error("Connection test failed:", error);
@@ -75,21 +81,23 @@ const OnboardingView = () => {
   const handleNext = async () => {
     try {
       const currentForm = formRefs[currentStep]?.current;
-      console.log("Validating form for step:", currentStep + 1);
+      console.log("Current form ref:", formRefs);
 
       if (currentForm) {
         await currentForm.validateFields();
       }
 
       if (currentStep === 2) {
-        if (!isConnectionSuccess) {
-          const connectionSuccess = await testConnection();
-          if (!connectionSuccess) return;
+        const isConnected = await testConnection();
+        if (isConnected) {
+          setCurrentStep((prev) => prev + 1);
+        } else {
+          return;
         }
-      }
-
-      if (currentStep < steps.length - 1) {
-        setCurrentStep((prev) => prev + 1);
+      } else {
+        if (currentStep < steps.length - 1) {
+          setCurrentStep((prev) => prev + 1);
+        }
       }
     } catch (error) {
       console.log("Validation failed:", error);
@@ -99,6 +107,11 @@ const OnboardingView = () => {
   const handleBack = () => {
     if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
+    }
+
+    if (currentStep === 3) {
+      setIsConnectionSuccess(false);
+      setIsModalVisible(false);
     }
   };
 

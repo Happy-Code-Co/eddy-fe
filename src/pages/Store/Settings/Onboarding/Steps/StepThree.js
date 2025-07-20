@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { Form, Input } from "antd";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 import CustomForm from "../../../../../layout/CustomForm";
 import CustomRadio from "../../../../../components/CustomRadio";
 
-const StepThree = ({ formData, updateFormData }) => {
+const StepThree = forwardRef(({ formData, updateFormData }, ref) => {
   const [form] = Form.useForm();
   const [keyType, setKeyType] = useState("public_key");
+
+  useImperativeHandle(ref, () => ({
+    validateFields: () => form.validateFields(),
+  }));
 
   const onChange = (e) => {
     setKeyType(e.target.value);
@@ -87,6 +91,6 @@ const StepThree = ({ formData, updateFormData }) => {
       </div>
     </div>
   );
-};
+});
 
 export default StepThree;
