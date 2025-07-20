@@ -127,7 +127,7 @@ const OnboardingView = () => {
 
       <Modal
         title={isConnectionSuccess ? "Conexión Exitosa" : "Error de Conexión"}
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={() => setIsModalVisible(false)}
         okButtonProps={
           isConnectionSuccess ? {} : { danger: true, type: "secondary" }
