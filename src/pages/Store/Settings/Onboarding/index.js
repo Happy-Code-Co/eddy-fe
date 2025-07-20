@@ -1,5 +1,5 @@
 import { Button, Modal } from "antd";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import "./Onboarding.scss";
 import StepOne from "./Steps/StepOne";
 import StepTwo from "./Steps/StepTwo";
@@ -16,8 +16,8 @@ const OnboardingView = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Test connection simulation set true for success, false for failure
-  // const isSuccess = false;
-  const isSuccess = Math.random() > 0.5; // Randomly simulate success or failure
+  const isSuccess = true;
+  //const isSuccess = Math.random() > 0.5; // Randomly simulate success or failure
 
   // Refs for each step's form
   const formRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
@@ -81,7 +81,6 @@ const OnboardingView = () => {
   const handleNext = async () => {
     try {
       const currentForm = formRefs[currentStep]?.current;
-      console.log("Current form ref:", formRefs);
 
       if (currentForm) {
         await currentForm.validateFields();
@@ -97,10 +96,14 @@ const OnboardingView = () => {
       } else {
         if (currentStep < steps.length - 1) {
           setCurrentStep((prev) => prev + 1);
+
+          if (currentStep === steps.length - 2) {
+            console.log("Final step reached, saving data:", formData);
+          }
         }
       }
     } catch (error) {
-      console.log("Validation failed:", error);
+      return;
     }
   };
 
@@ -120,10 +123,6 @@ const OnboardingView = () => {
     if (currentStep === steps.length - 2) return "Finalizar";
     return "Continuar";
   };
-
-  useEffect(() => {
-    console.log("Form data:", formData);
-  }, [currentStep, formData]);
 
   return (
     <div className="onboarding-view">

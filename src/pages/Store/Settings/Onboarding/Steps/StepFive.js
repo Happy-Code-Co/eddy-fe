@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 import finishedImage from "../../../../../assets/ui/finish-onboarding.svg";
+import ActionCard from "../../../../../components/ActionCard/ActionCard";
+
+import MagicWand from "../../../../../assets/ui/MagicWand.svg";
+import Storefront from "../../../../../assets/ui/Storefront.svg";
 
 const StepFive = ({ formData }) => {
   useEffect(() => {
@@ -18,7 +22,23 @@ const StepFive = ({ formData }) => {
             sitio web.
           </p>
 
-          <p>
+          <ActionCard
+            icon={<img src={Storefront} alt="Storefront" />}
+            title="Agregar un nuevo producto"
+            description="Comienza a cargar tus productos o servicios."
+            ctaText="Agregar producto"
+            onClick={() => console.log("Agregar producto")}
+          />
+
+          <ActionCard
+            icon={<img src={MagicWand} alt="Magic Wand" />}
+            title="Armar mi sitio web"
+            description="Personaliza el diseño y contenido de tu sitio."
+            ctaText="Ir al editor del sitio"
+            onClick={() => console.log("Ir al editor")}
+          />
+
+          <p style={{ marginTop: "24px" }}>
             Puedes volver a esta pantalla desde el panel de administración
             cuando quieras.
           </p>
