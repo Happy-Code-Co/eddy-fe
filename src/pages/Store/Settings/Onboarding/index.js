@@ -8,6 +8,7 @@ import StepThree from "./Steps/StepThree";
 import StepFour from "./Steps/StepFour";
 import StepFive from "./Steps/StepFive";
 import done from "../../../../assets/ui/done.svg";
+import caret from "../../../../assets/ui/caret.svg";
 
 const OnboardingView = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -101,6 +102,12 @@ const OnboardingView = () => {
     }
   };
 
+  const getButtonText = () => {
+    if (currentStep === 2) return "Probar conexión";
+    if (currentStep === steps.length - 2) return "Finalizar";
+    return "Continuar";
+  };
+
   useEffect(() => {
     console.log("Form data:", formData);
   }, [currentStep, formData]);
@@ -119,7 +126,8 @@ const OnboardingView = () => {
           )}
           {currentStep < steps.length - 1 ? (
             <Button onClick={handleNext} type="primary">
-              Continuar
+              {getButtonText()}
+              <img src={caret} alt="Next" />
             </Button>
           ) : null}
         </div>

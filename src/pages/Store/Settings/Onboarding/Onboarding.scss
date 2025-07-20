@@ -51,6 +51,19 @@
       flex-direction: row;
       justify-content: space-between;
     }
+
+    .ant-form {
+      .ant-form-item-optional {
+        color: $white;
+      }
+
+      .ant-input-status-error {
+        border-color: $error;
+        box-shadow: none;
+        background-color: $neutral-20;
+        color: $white;
+      }
+    }
   }
 }
 

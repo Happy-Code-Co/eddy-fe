@@ -1,11 +1,11 @@
-// StepThree.js
-import React, { useState } from "react";
-import { Form, Input, Button } from "antd";
+import { useState } from "react";
+import { Form, Input } from "antd";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 import CustomForm from "../../../../../layout/CustomForm";
 import CustomRadio from "../../../../../components/CustomRadio";
 
 const StepThree = ({ formData, updateFormData }) => {
+  const [form] = Form.useForm();
   const [keyType, setKeyType] = useState("public_key");
 
   const onChange = (e) => {
@@ -13,8 +13,8 @@ const StepThree = ({ formData, updateFormData }) => {
     updateFormData({ keyType: e.target.value });
   };
 
-  const handleInputChange = (field) => (e) => {
-    updateFormData({ [field]: e.target.value });
+  const onValuesChange = (changedValues, allValues) => {
+    updateFormData({ ...formData, ...allValues });
   };
 
   const keyTypes = [
@@ -37,21 +37,42 @@ const StepThree = ({ formData, updateFormData }) => {
           </p>
         </div>
 
-        <CustomForm layout="vertical">
-          <Form.Item label="Llave publica" required>
+        <CustomForm
+          form={form}
+          layout="vertical"
+          initialValues={formData}
+          onValuesChange={onValuesChange}
+        >
+          <Form.Item
+            label="Llave publica"
+            name={"publicKey"}
+            rules={[
+              {
+                required: true,
+                message: "Por favor ingresa tu llave publica de Wompi",
+              },
+            ]}
+          >
             <Input
               size="large"
               placeholder="pub_prod_ABC123..."
               value={formData.publicKey}
-              onChange={handleInputChange("publicKey")}
             />
           </Form.Item>
-          <Form.Item label="Llave privada" required>
+          <Form.Item
+            label="Llave privada"
+            name={"privateKey"}
+            rules={[
+              {
+                required: true,
+                message: "Por favor ingresa tu llave privada de Wompi",
+              },
+            ]}
+          >
             <Input
               size="large"
               placeholder="pub_prod_ABC123..."
               value={formData.privateKey}
-              onChange={handleInputChange("privateKey")}
             />
           </Form.Item>
 

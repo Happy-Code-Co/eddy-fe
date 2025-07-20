@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import { Form, Input } from "antd";
 import CustomForm from "../../../../../layout/CustomForm";
 import CustomDragger from "../../../../../components/CustomDragger";
@@ -48,7 +48,7 @@ const StepTwo = forwardRef(({ formData, updateFormData }, ref) => {
           <Form.Item label="Logo (Subida de imagen)" required>
             <CustomDragger />
           </Form.Item>
-          <Form.Item label="Favicon (opcional)">
+          <Form.Item label="Favicon">
             <CustomDragger />
           </Form.Item>
         </CustomForm>

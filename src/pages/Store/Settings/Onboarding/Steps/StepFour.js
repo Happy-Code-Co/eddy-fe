@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Form, Input } from "antd";
+import { useState } from "react";
+import { Form } from "antd";
 import StepHeader from "../../../../../components/Steps/StepHeader";
 import CustomForm from "../../../../../layout/CustomForm";
 import CustomCheckbox from "../../../../../components/CustomChecbox";
@@ -35,7 +35,7 @@ const StepFour = ({ formData, updateFormData }) => {
         </div>
 
         <CustomForm layout="vertical">
-          <Form.Item label="Tipo de llave" required>
+          <Form.Item label="" required>
             <CustomCheckbox
               options={deliveryTypes}
               onchange={onChange}
