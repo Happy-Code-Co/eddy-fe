@@ -32,7 +32,7 @@ const SigninPage = () => {
         });
         setTimeout(() => navigate(DASHBOARD), 2000);
       } else {
-        // Handle specific field errors if they exist
+        // Manejar errores específicos de campos si existen
         if (result.details) {
           const fieldErrors = {};
           result.details.forEach((detail) => {
@@ -60,7 +60,7 @@ const SigninPage = () => {
         });
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Error de inicio de sesión:", error);
       messageApi.open({
         type: "error",
         content: "Ocurrió un error inesperado. Por favor intenta más tarde.",
@@ -71,8 +71,8 @@ const SigninPage = () => {
 
   return (
     <AuthPages
-      title={"Hey there, welcome back!"}
-      description={"Access your dashboard and manage your store."}
+      title={"¡Hola de nuevo!"}
+      description={"Accede a tu panel y gestiona tu tienda."}
     >
       {contextHolder}
       <CustomForm
@@ -87,9 +87,9 @@ const SigninPage = () => {
         autoComplete="off"
       >
         <Form.Item
-          label="Email"
+          label="Correo electrónico"
           name="email"
-          tooltip="This is a required field"
+          tooltip="Este campo es obligatorio"
           rules={[
             { required: true, message: "Este campo es obligatorio." },
             {
@@ -98,13 +98,13 @@ const SigninPage = () => {
             },
           ]}
         >
-          <Input placeholder="Enter your email" />
+          <Input placeholder="Ingresa tu correo electrónico" />
         </Form.Item>
 
         <Form.Item
-          label="Password"
+          label="Contraseña"
           name="password"
-          tooltip="This is a required field"
+          tooltip="Este campo es obligatorio"
           rules={[
             { required: true, message: "Este campo es obligatorio." },
             {
@@ -113,7 +113,7 @@ const SigninPage = () => {
             },
           ]}
         >
-          <Input.Password placeholder="Enter your password" />
+          <Input.Password placeholder="Ingresa tu contraseña" />
         </Form.Item>
 
         <Form.Item>
@@ -123,7 +123,7 @@ const SigninPage = () => {
             className="submit-button"
             size="large"
           >
-            Continue
+            Continuar
           </Button>
         </Form.Item>
       </CustomForm>

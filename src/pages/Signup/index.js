@@ -32,13 +32,13 @@ const SignUpPage = () => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    console.log("Falló:", errorInfo);
   };
 
   return (
     <AuthPages
-      title={"Create an account"}
-      description={"Start now for free. No credit card required."}
+      title={"Crea una cuenta"}
+      description={"Empieza ahora gratis. No necesitas tarjeta de crédito."}
     >
       <CustomForm
         className="sign-form"
@@ -49,42 +49,51 @@ const SignUpPage = () => {
         autoComplete="off"
       >
         <Form.Item
-          label="First Name"
+          label="Nombre"
           name="first_name"
-          tooltip="This is a required field"
-          rules={[{ required: true, message: "Please input your firstname" }]}
+          tooltip="Este campo es obligatorio"
+          rules={[{ required: true, message: "Por favor, ingresa tu nombre" }]}
         >
-          <Input placeholder="Enter your first name" />
+          <Input placeholder="Escribe tu nombre" />
         </Form.Item>
         <Form.Item
-          label="Last Name"
+          label="Apellido"
           name="last_name"
-          tooltip="This is a required field"
-          rules={[{ required: true, message: "Please input your lastname" }]}
+          tooltip="Este campo es obligatorio"
+          rules={[
+            { required: true, message: "Por favor, ingresa tu apellido" },
+          ]}
         >
-          <Input placeholder="Enter your last name" />
+          <Input placeholder="Escribe tu apellido" />
         </Form.Item>
         <Form.Item
-          label="Email"
+          label="Correo electrónico"
           name="email"
-          tooltip="This is a required field"
-          rules={[{ required: true, message: "Please input your email" }]}
+          tooltip="Este campo es obligatorio"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, ingresa tu correo electrónico",
+            },
+          ]}
         >
-          <Input placeholder="Enter your email" />
+          <Input placeholder="Escribe tu correo electrónico" />
         </Form.Item>
 
         <Form.Item
-          label="Password"
+          label="Contraseña"
           name="password"
-          tooltip="This is a required field"
-          rules={[{ required: true, message: "Please input your password" }]}
+          tooltip="Este campo es obligatorio"
+          rules={[
+            { required: true, message: "Por favor, ingresa una contraseña" },
+          ]}
         >
-          <Input.Password placeholder="Enter a password" />
+          <Input.Password placeholder="Escribe una contraseña" />
         </Form.Item>
 
         <Form.Item label={null}>
           <Button type="primary" htmlType="submit" className="submit-button">
-            Create
+            Crear cuenta
           </Button>
         </Form.Item>
       </CustomForm>
