@@ -1,16 +1,23 @@
+import { forwardRef, useEffect, useImperativeHandle } from "react";
 import { Form, Input } from "antd";
 import CustomForm from "../../../../../layout/CustomForm";
-import Dragger from "antd/es/upload/Dragger";
-import { InboxOutlined } from "@ant-design/icons";
 import CustomDragger from "../../../../../components/CustomDragger";
+import StepHeader from "../../../../../components/Steps/StepHeader";
 
-const StepTwo = () => {
+const StepTwo = forwardRef(({ formData, updateFormData }, ref) => {
+  const [form] = Form.useForm();
+
+  useImperativeHandle(ref, () => ({
+    validateFields: () => form.validateFields(),
+  }));
+
+  const onValuesChange = (changedValues, allValues) => {
+    updateFormData({ ...formData, ...allValues });
+  };
+
   return (
     <div className="step">
-      <div className="step-header">
-        <label>Paso 2 de 9</label>
-        <h2>Nombre y Marca</h2>
-      </div>
+      <StepHeader stepLabel={"Paso 2 de 5"} title={"Nombre y Marca"} />
       <div className="step-content">
         <div className="instructions">
           <h6>Define tu identidad</h6>
@@ -19,20 +26,39 @@ const StepTwo = () => {
           </p>
         </div>
 
-        <CustomForm layout="vertical">
-          <Form.Item label="Nombre del sitio o Tienda" required>
+        <CustomForm
+          form={form}
+          layout="vertical"
+          initialValues={formData}
+          onValuesChange={onValuesChange}
+        >
+          <Form.Item
+            name="siteName"
+            label="Nombre del sitio o Tienda"
+            rules={[
+              {
+                required: true,
+                message: "Por favor ingresa el nombre del sitio",
+              },
+              { min: 3, message: "El nombre debe tener al menos 3 caracteres" },
+            ]}
+          >
             <Input placeholder="Agrega el nombre del Sitio" />
           </Form.Item>
-          <Form.Item label="Logo (Subida de imagen)" required>
-            <CustomDragger />
+          <Form.Item
+            name="logo"
+            label="Logo (Subida de imagen)"
+            rules={[{ required: true, message: "El logo es requerido" }]}
+          >
+            <CustomDragger name="logo" />
           </Form.Item>
-          <Form.Item label="Favicon (opcional)" required>
-            <CustomDragger />
+          <Form.Item name="favicon" label="Favicon">
+            <CustomDragger name="favicon" />
           </Form.Item>
         </CustomForm>
       </div>
     </div>
   );
-};
+});
 
 export default StepTwo;
