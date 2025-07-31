@@ -1,16 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input } from "antd";
-
+import { Button, Form, Input, message } from "antd";
 import useAuth from "../../hooks/useAuth";
 import { ACCOUNT_ONBOARDING, DASHBOARD } from "../../routes/list";
-
 import AuthPages from "../../layout/AuthPages/AuthPages";
 import CustomForm from "../../layout/CustomForm";
 
 const SignUpPage = () => {
   const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -21,18 +22,55 @@ const SignUpPage = () => {
   }, [isAuthenticated, navigate]);
 
   const createAccount = async (values) => {
+    setLoading(true);
     try {
       const result = await register(values);
+
       if (result.success) {
-        navigate(ACCOUNT_ONBOARDING);
+        messageApi.open({
+          type: "success",
+          content:
+            "¡Registro exitoso! Redirigiéndote para completar tu perfil...",
+          duration: 2,
+        });
+        setTimeout(() => navigate(ACCOUNT_ONBOARDING), 2000);
+      } else {
+        if (result.error === "Email already in use") {
+          form.setFields([
+            {
+              name: "email",
+              errors: ["Este correo electrónico ya está registrado"],
+            },
+          ]);
+
+          messageApi.open({
+            type: "error",
+            content:
+              "Este correo ya está registrado. Por favor usa otro o inicia sesión.",
+            duration: 4,
+          });
+        } else {
+          messageApi.open({
+            type: "error",
+            content: result.error || "Ocurrió un error al registrar tu cuenta",
+            duration: 4,
+          });
+        }
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error en registro:", error);
+      messageApi.open({
+        type: "error",
+        content: "Ocurrió un error inesperado. Por favor intenta más tarde.",
+        duration: 4,
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Falló:", errorInfo);
+  const onFinishFailed = ({ errorFields }) => {
+    form.scrollToField(errorFields[0].name);
   };
 
   return (
@@ -40,7 +78,9 @@ const SignUpPage = () => {
       title={"Crea una cuenta"}
       description={"Empieza ahora gratis. No necesitas tarjeta de crédito."}
     >
+      {contextHolder}
       <CustomForm
+        form={form}
         className="sign-form"
         name="sign-form"
         layout="vertical"
@@ -56,6 +96,7 @@ const SignUpPage = () => {
         >
           <Input placeholder="Escribe tu nombre" />
         </Form.Item>
+
         <Form.Item
           label="Apellido"
           name="last_name"
@@ -66,6 +107,7 @@ const SignUpPage = () => {
         >
           <Input placeholder="Escribe tu apellido" />
         </Form.Item>
+
         <Form.Item
           label="Correo electrónico"
           name="email"
@@ -75,6 +117,7 @@ const SignUpPage = () => {
               required: true,
               message: "Por favor, ingresa tu correo electrónico",
             },
+            { type: "email", message: "Por favor ingresa un correo válido" },
           ]}
         >
           <Input placeholder="Escribe tu correo electrónico" />
@@ -86,13 +129,23 @@ const SignUpPage = () => {
           tooltip="Este campo es obligatorio"
           rules={[
             { required: true, message: "Por favor, ingresa una contraseña" },
+            {
+              min: 6,
+              message: "La contraseña debe tener al menos 6 caracteres",
+            },
           ]}
         >
           <Input.Password placeholder="Escribe una contraseña" />
         </Form.Item>
 
         <Form.Item label={null}>
-          <Button type="primary" htmlType="submit" className="submit-button">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="submit-button"
+            loading={loading}
+            size="large"
+          >
             Crear cuenta
           </Button>
         </Form.Item>
