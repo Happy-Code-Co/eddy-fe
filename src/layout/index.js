@@ -32,16 +32,16 @@ const items = [
     getItem("Ajustes", "4"),
   ]),
   getItem("Productos", "sub2", <TagOutlined />, [
-    getItem("Item 1", "6"),
-    getItem("Item 2", "8"),
+    getItem("Item 1", "5"),
+    getItem("Item 2", "6"),
   ]),
   getItem("Ordenes", "sub3", <InboxOutlined />, [
-    getItem("Item 1", "6"),
+    getItem("Item 1", "7"),
     getItem("Item 2", "8"),
   ]),
   getItem("Clientes", "sub4", <TeamOutlined />, [
-    getItem("Item 1", "6"),
-    getItem("Item 2", "8"),
+    getItem("Item 1", "9"),
+    getItem("Item 2", "10"),
   ]),
 ];
 

@@ -1,9 +1,13 @@
 import { Form } from "antd";
 
 const CustomForm = (props) => {
-  const { children } = props;
+  const { children, ...restProps } = props;
   return (
-    <Form {...props} requiredMark="optional">
+    <Form
+      {...restProps}
+      requiredMark="optional"
+      validateTrigger={["onChange", "onBlur"]}
+    >
       {children}
     </Form>
   );

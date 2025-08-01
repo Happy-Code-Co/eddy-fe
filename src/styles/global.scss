@@ -36,6 +36,17 @@ body {
     }
   }
 
+  &.ant-btn-secondary {
+    color: $white;
+    border: 1px solid $main-green;
+    color: $main-green;
+
+    &:hover {
+      background: $main-green;
+      color: $white;
+    }
+  }
+
   &:disabled {
     background: #9fbcdf;
   }
