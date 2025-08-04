@@ -1,23 +1,37 @@
 import { Button, Modal } from "antd";
-import { useState, useRef } from "react";
-import "./Onboarding.scss";
-import StepOne from "./Steps/StepOne";
-import StepTwo from "./Steps/StepTwo";
-import StepThree from "./Steps/StepThree";
-import StepFour from "./Steps/StepFour";
-import StepFive from "./Steps/StepFive";
-import done from "../../../../assets/ui/done.svg";
+import { useRef, useState } from "react";
 import caret from "../../../../assets/ui/caret.svg";
+import done from "../../../../assets/ui/done.svg";
+import error from "../../../../assets/ui/error.svg";
+import "./Onboarding.scss";
+import StepFive from "./Steps/StepFive";
+import StepFour from "./Steps/StepFour";
+import StepOne from "./Steps/StepOne";
+import StepThree from "./Steps/StepThree";
+import StepTwo from "./Steps/StepTwo";
 
 const OnboardingView = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({});
   const [isConnectionSuccess, setIsConnectionSuccess] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleOk = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setIsModalVisible(false);
+    }, 3000);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   // Test connection simulation set true for success, false for failure
-  const isSuccess = true;
-  //const isSuccess = Math.random() > 0.5; // Randomly simulate success or failure
+  //const isSuccess = false;
+  const isSuccess = Math.random() > 0.5; // Randomly simulate success or failure
 
   // Refs for each step's form
   const formRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
@@ -146,7 +160,7 @@ const OnboardingView = () => {
       </div>
 
       <Modal
-        title={isConnectionSuccess ? "Conexión Exitosa" : "Error de Conexión"}
+        title={isConnectionSuccess ? "Conexión Exitosa" : "Conexión fallida."}
         open={isModalVisible}
         onOk={() => setIsModalVisible(false)}
         okButtonProps={
@@ -159,11 +173,45 @@ const OnboardingView = () => {
             ? "onboarding-success-modal"
             : "onboarding-success-modal onboarding-error-modal"
         }
+        footer={
+          isConnectionSuccess
+            ? [
+                <Button
+                  className={isConnectionSuccess ? "" : "btn-danger"}
+                  type="primary"
+                  key="back"
+                  onClick={handleCancel}
+                >
+                  Guardar y continuar
+                </Button>,
+              ]
+            : [
+                <Button
+                  className={isConnectionSuccess ? "" : "btn-danger"}
+                  type="primary"
+                  key="back"
+                  onClick={handleCancel}
+                >
+                  Reintentar
+                </Button>,
+                <Button
+                  className={isConnectionSuccess ? "" : "btn-danger--secondary"}
+                  key="link"
+                  href="https://docs.wompi.co/en/docs/colombia/ambientes-y-llaves-pagos-a-terceros/"
+                  target="_blank"
+                  type="secondary"
+                  loading={loading}
+                  onClick={handleOk}
+                >
+                  Ir a la guía de integración
+                </Button>,
+              ]
+        }
       >
         {isConnectionSuccess ? (
           <img src={done} alt="Success Icon" />
         ) : (
-          <div className="error-icon">!</div>
+          <img src={error} alt="Error Icon" />
         )}
 
         <div
@@ -176,12 +224,12 @@ const OnboardingView = () => {
           {isConnectionSuccess ? (
             <h3>Tus credenciales están seguras.</h3>
           ) : (
-            <h3>Hubo un error al conectar tu tienda</h3>
+            <h3>No pudimos conectar con Wompi.</h3>
           )}
           <p>
             {isConnectionSuccess
               ? "Las usamos únicamente para conectar tu tienda con Wompi y no serán compartidas con terceros."
-              : "Por favor, verifica tus credenciales y vuelve a intentarlo."}
+              : "Revisa tus credenciales o vuelve a intentarlo más tarde."}
           </p>
         </div>
       </Modal>
