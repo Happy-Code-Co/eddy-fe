@@ -130,6 +130,22 @@
     .ant-btn {
       width: 100%;
       margin-inline-start: 0 !important;
+      font-weight: bold;
+      &.btn-danger {
+        background-color: $error;
+        margin-bottom: 1rem;
+        &--secondary {
+          border-color: $error;
+          color: $error;
+          &:hover {
+            background-color: $error !important;
+            color: #fff;
+          }
+        }
+        &:hover {
+          background-color: $error !important;
+        }
+      }
     }
   }
 }
