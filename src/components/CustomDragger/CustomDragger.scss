@@ -2,9 +2,62 @@
 
 .custom-dragger {
   .ant-upload {
-    p.ant-upload-text,
     p.ant-upload-hint {
       color: $white;
     }
+    p.ant-upload-text {
+      color: $main-green;
+    }
   }
+  &.ant-upload-wrapper {
+    .ant-upload-drag {
+      border-color: $neutral-30;
+      &:hover {
+        border-color: $main-green;
+      }
+    }
+  }
+
+  .preview-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+  }
+}
+
+.ant-form-item.ant-form-item-has-error {
+  .custom-dragger.ant-upload-wrapper .ant-upload-drag {
+    border-color: $error;
+  }
+}
+
+.preview-actions {
+  margin-top: 10px;
+  text-align: center;
+
+  .remove-button {
+    background: none;
+    border: none;
+    color: #ff4d4f;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.ant-upload-error-message {
+  color: $error;
+  margin-top: 10px;
+  text-align: center;
 }

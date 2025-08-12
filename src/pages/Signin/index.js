@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input } from "antd";
-
+import { Button, Form, Input, message } from "antd";
 import useAuth from "../../hooks/useAuth";
 import { DASHBOARD } from "../../routes/list";
-
 import AuthPages from "../../layout/AuthPages/AuthPages";
 import CustomForm from "../../layout/CustomForm";
 
 const SigninPage = () => {
-  // Hooks
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [form] = Form.useForm();
 
   useEffect(() => {
     (async () => {
@@ -24,50 +23,107 @@ const SigninPage = () => {
   const loginAction = async (values) => {
     try {
       const result = await login(values);
+
       if (result.success) {
-        navigate(DASHBOARD);
+        messageApi.open({
+          type: "success",
+          content: "¡Bienvenido de nuevo! Redirigiéndote a tu panel...",
+          duration: 2,
+        });
+        setTimeout(() => navigate(DASHBOARD), 2000);
       } else {
-        // Optionally handle error, e.g., show message
-        console.log(result.error);
+        // Manejar errores específicos de campos si existen
+        if (result.details) {
+          const fieldErrors = {};
+          result.details.forEach((detail) => {
+            const fieldName = detail.path[0];
+            if (!fieldErrors[fieldName]) {
+              fieldErrors[fieldName] = [];
+            }
+            fieldErrors[fieldName].push(detail.message);
+          });
+
+          form.setFields(
+            Object.entries(fieldErrors).map(([name, errors]) => ({
+              name,
+              errors,
+            }))
+          );
+        }
+
+        messageApi.open({
+          type: "error",
+          content:
+            result.error ||
+            "Correo o contraseña incorrectos. Por favor verifica tus datos.",
+          duration: 4,
+        });
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error de inicio de sesión:", error);
+      messageApi.open({
+        type: "error",
+        content: "Ocurrió un error inesperado. Por favor intenta más tarde.",
+        duration: 4,
+      });
     }
   };
+
   return (
     <AuthPages
-      title={"Hey there, welcome back!"}
-      description={"Access your dashboard and manage your store."}
+      title={"¡Hola de nuevo!"}
+      description={"Accede a tu panel y gestiona tu tienda."}
     >
+      {contextHolder}
       <CustomForm
+        form={form}
         className="sign-form"
         name="sign-form"
         layout="vertical"
         onFinish={loginAction}
-        onFinishFailed={() => {}}
+        onFinishFailed={({ errorFields }) => {
+          form.scrollToField(errorFields[0].name);
+        }}
         autoComplete="off"
       >
         <Form.Item
-          label="Email"
+          label="Correo electrónico"
           name="email"
-          tooltip="This is a required field"
-          rules={[{ required: true, message: "Please input your email" }]}
+          tooltip="Este campo es obligatorio"
+          rules={[
+            { required: true, message: "Este campo es obligatorio." },
+            {
+              type: "email",
+              message: "Por favor ingresa un correo electrónico válido.",
+            },
+          ]}
         >
-          <Input placeholder="Enter your email" />
+          <Input placeholder="Ingresa tu correo electrónico" />
         </Form.Item>
 
         <Form.Item
-          label="Password"
+          label="Contraseña"
           name="password"
-          tooltip="This is a required field"
-          rules={[{ required: true, message: "Please input your password" }]}
+          tooltip="Este campo es obligatorio"
+          rules={[
+            { required: true, message: "Este campo es obligatorio." },
+            {
+              min: 6,
+              message: "La contraseña debe tener al menos 6 caracteres.",
+            },
+          ]}
         >
-          <Input.Password placeholder="Enter a password" />
+          <Input.Password placeholder="Ingresa tu contraseña" />
         </Form.Item>
 
-        <Form.Item label={null}>
-          <Button type="primary" htmlType="submit" className="submit-button">
-            Continue
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="submit-button"
+            size="large"
+          >
+            Continuar
           </Button>
         </Form.Item>
       </CustomForm>
