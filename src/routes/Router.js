@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 
 import {
-  STORE_ONBOARDING,
-  STORE_SETTINGS,
+  ONBOARDING,
+  SETTINGS,
   DASHBOARD,
   LOGIN,
-  STORE_CONTENT,
+  WEB_CONTENT,
   REGISTER,
   ROOT,
 } from "./list";
@@ -28,11 +28,11 @@ const Router = ({ setIsDark, isDark }) => {
       <Route element={<PrivateRoute />}>
         <Route element={<MainLayout setIsDark={setIsDark} isDark={isDark} />}>
           <Route path={DASHBOARD} element={<HomePage />} />
-          <Route path={STORE_SETTINGS} element={<SettingsPage />} />
-          <Route path={STORE_ONBOARDING} element={<OnboardingView />} />
-          <Route path={STORE_CONTENT} element={<StoreContent />} />
+          <Route path={SETTINGS} element={<SettingsPage />} />
+          <Route path={ONBOARDING} element={<OnboardingView />} />
           {/* Add more routes here that need MainLayout */}
         </Route>
+        <Route path={WEB_CONTENT} element={<StoreContent />} />
       </Route>
     </Routes>
   );
