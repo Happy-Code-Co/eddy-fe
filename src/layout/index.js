@@ -34,10 +34,6 @@ const menuItems = [
     label: "Productos",
     key: "/products",
     icon: <TagOutlined />,
-    children: [
-      { label: "Item 1", key: "/products/item1" },
-      { label: "Item 2", key: "/products/item2" },
-    ],
   },
   {
     label: "Ordenes",

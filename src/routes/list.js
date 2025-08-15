@@ -6,3 +6,5 @@ export const WEB_CONTENT = "/store/content";
 export const ROOT = "/";
 export const LOGIN = "/login";
 export const REGISTER = "/register";
+
+export const PRODUCTS = "/products";

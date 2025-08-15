@@ -1,0 +1,178 @@
+@import "../../styles/_variables.scss";
+
+.products-page {
+  color: var(--text-primary);
+  background: var(--background);
+  min-height: 100vh;
+  padding: 32px 24px;
+
+  .products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .products-header-actions {
+      display: flex;
+      gap: 12px;
+      .export-btn,
+      .add-btn {
+        padding: 8px 18px;
+        border-radius: 6px;
+        border: none;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      .export-btn {
+        background: var(--button-secondary-bg);
+        color: var(--button-secondary-text);
+      }
+      .add-btn {
+        background: var(--button-primary-bg);
+        color: var(--button-primary-text);
+      }
+    }
+  }
+  .products-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    button {
+      background: none;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 6px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      &.active {
+        background: var(--tab-active-bg);
+        color: var(--tab-active-text);
+      }
+    }
+  }
+  .products-table-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    .search-bar {
+      background: var(--input-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 1rem;
+      width: 240px;
+    }
+  }
+  .products-table-wrapper {
+    background: var(--table-bg);
+    border-radius: 10px;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    margin-bottom: 18px;
+    .products-table {
+      width: 100%;
+      border-collapse: collapse;
+      th,
+      td {
+        padding: 12px 10px;
+        text-align: left;
+      }
+      th {
+        color: var(--text-secondary);
+        font-weight: 600;
+        font-size: 0.98rem;
+        border-bottom: 1px solid var(--table-border);
+      }
+      td {
+        font-size: 0.97rem;
+        border-bottom: 1px solid var(--table-border);
+      }
+      .status-active {
+        background: #1eae60;
+        color: #fff;
+        border-radius: 5px;
+        padding: 2px 10px;
+        font-size: 0.93em;
+        font-weight: 500;
+      }
+      .status-draft {
+        background: #23272f;
+        color: #fff;
+        border-radius: 5px;
+        padding: 2px 10px;
+        font-size: 0.93em;
+        font-weight: 500;
+      }
+      .out-of-stock {
+        color: #e74c3c;
+        font-weight: 600;
+      }
+    }
+  }
+  .products-pagination {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 8px;
+    .page-btn {
+      background: none;
+      border: none;
+      border-radius: 5px;
+      padding: 4px 12px;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      &.active {
+        background: var(--button-primary-bg);
+        color: var(--button-primary-text);
+      }
+    }
+    span {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+  }
+  .products-footer {
+    color: var(--text-secondary);
+    font-size: 0.97rem;
+    margin-top: 6px;
+  }
+}
+
+// Light/dark mode variables
+:root {
+  --background: #fff;
+  --text-primary: #181c1f;
+  --text-secondary: #6b6f76;
+  --button-primary-bg: #e6f2d9;
+  --button-primary-text: #181c1f;
+  --button-secondary-bg: #23272f;
+  --button-secondary-text: #fff;
+  --tab-active-bg: #e6f2d9;
+  --tab-active-text: #181c1f;
+  --input-bg: #f5f6fa;
+  --input-border: #e0e0e0;
+  --table-bg: #fff;
+  --table-border: #e0e0e0;
+}
+[data-theme="dark"] {
+  --background: #181c1f;
+  --text-primary: #fff;
+  --text-secondary: #b0b3b8;
+  --button-primary-bg: #1eae60;
+  --button-primary-text: #fff;
+  --button-secondary-bg: #23272f;
+  --button-secondary-text: #fff;
+  --tab-active-bg: #23272f;
+  --tab-active-text: #fff;
+  --input-bg: #23272f;
+  --input-border: #23272f;
+  --table-bg: #23272f;
+  --table-border: #23272f;
+}
