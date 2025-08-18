@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, message } from "antd";
-import useAuth from "../../hooks/useAuth";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import { DASHBOARD } from "../../routes/list";
-import AuthPages from "../../layout/AuthPages/AuthPages";
+import useAuth from "../../hooks/useAuth";
+
 import CustomForm from "../../layout/CustomForm";
+import AuthPages from "../../layout/AuthPages/AuthPages";
 
 const SigninPage = () => {
   const { login, isAuthenticated } = useAuth();
@@ -77,7 +79,7 @@ const SigninPage = () => {
       {contextHolder}
       <CustomForm
         form={form}
-        className="sign-form"
+        className="w-full"
         name="sign-form"
         layout="vertical"
         onFinish={loginAction}
@@ -87,9 +89,14 @@ const SigninPage = () => {
         autoComplete="off"
       >
         <Form.Item
-          label="Correo electrónico"
+          label={<label className="text-white">Correo electrónico</label>}
           name="email"
-          tooltip="Este campo es obligatorio"
+          tooltip={{
+            title: "Este campo es obligatorio",
+            icon: (
+              <InfoCircleOutlined style={{ color: "white", marginLeft: 10 }} />
+            ),
+          }}
           rules={[
             { required: true, message: "Este campo es obligatorio." },
             {
@@ -98,13 +105,21 @@ const SigninPage = () => {
             },
           ]}
         >
-          <Input placeholder="Ingresa tu correo electrónico" />
+          <Input
+            placeholder="Ingresa tu correo electrónico"
+            className="bg-transparent hover:bg-[#383838] focus:bg-[#383838] text-white"
+          />
         </Form.Item>
 
         <Form.Item
-          label="Contraseña"
+          label={<label className="text-white">Contraseña</label>}
           name="password"
-          tooltip="Este campo es obligatorio"
+          tooltip={{
+            title: "Este campo es obligatorio",
+            icon: (
+              <InfoCircleOutlined style={{ color: "white", marginLeft: 10 }} />
+            ),
+          }}
           rules={[
             { required: true, message: "Este campo es obligatorio." },
             {
@@ -120,7 +135,7 @@ const SigninPage = () => {
           <Button
             type="primary"
             htmlType="submit"
-            className="submit-button"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
             size="large"
           >
             Continuar

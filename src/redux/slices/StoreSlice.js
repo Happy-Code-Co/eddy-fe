@@ -8,8 +8,14 @@ export const StoreSlice = createSlice({
     favico: null,
     logo_desktop: null,
     logo_mobile: null,
+    pages: [],
+    selectedPage: null,
+    deleteModalVisible: false,
+    deletingPageId: null,
+    addSectionModalVisible: false,
+    // Add more modal/section state as needed
     /* created_at: null,
-    updated_at: null, */
+  updated_at: null, */
   },
   reducers: {
     setStoreInfo: (state, action) => {
@@ -22,10 +28,36 @@ export const StoreSlice = createSlice({
       state.logo_desktop = logo_desktop;
       state.logo_mobile = logo_mobile;
     },
+    setPages: (state, action) => {
+      state.pages = action.payload;
+    },
+    addPage: (state, action) => {
+      state.pages.push(action.payload);
+    },
+    setSelectedPage: (state, action) => {
+      state.selectedPage = action.payload;
+    },
+    setDeleteModalVisible: (state, action) => {
+      state.deleteModalVisible = action.payload;
+    },
+    setDeletingPageId: (state, action) => {
+      state.deletingPageId = action.payload;
+    },
+    setAddSectionModalVisible: (state, action) => {
+      state.addSectionModalVisible = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setStoreInfo } = StoreSlice.actions;
+export const {
+  setStoreInfo,
+  setPages,
+  addPage,
+  setSelectedPage,
+  setDeleteModalVisible,
+  setDeletingPageId,
+  setAddSectionModalVisible,
+} = StoreSlice.actions;
 
 export default StoreSlice.reducer;

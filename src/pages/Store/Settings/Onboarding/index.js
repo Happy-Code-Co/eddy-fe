@@ -3,7 +3,6 @@ import { useRef, useState } from "react";
 import caret from "../../../../assets/ui/caret.svg";
 import done from "../../../../assets/ui/done.svg";
 import error from "../../../../assets/ui/error.svg";
-import "./Onboarding.scss";
 import StepFive from "./Steps/StepFive";
 import StepFour from "./Steps/StepFour";
 import StepOne from "./Steps/StepOne";
@@ -139,19 +138,27 @@ const OnboardingView = () => {
   };
 
   return (
-    <div className="onboarding-view">
-      <div className="wizard">
+    <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8 mt-8">
+      <div className="mb-6">
         {steps[currentStep]}
-        <div className="navigation-buttons">
+        <div className="flex justify-between mt-6">
           {currentStep > 0 ? (
-            <Button onClick={handleBack} type="secondary">
+            <Button
+              onClick={handleBack}
+              type="secondary"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded"
+            >
               Atrás
             </Button>
           ) : (
             <span></span>
           )}
           {currentStep < steps.length - 1 ? (
-            <Button onClick={handleNext} type="primary">
+            <Button
+              onClick={handleNext}
+              type="primary"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded flex items-center gap-2"
+            >
               {getButtonText()}
               <img src={caret} alt="Next" />
             </Button>

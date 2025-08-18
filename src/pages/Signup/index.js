@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, message } from "antd";
 import useAuth from "../../hooks/useAuth";
-import { ACCOUNT_ONBOARDING, DASHBOARD } from "../../routes/list";
+import { ONBOARDING, DASHBOARD } from "../../routes/list";
 import AuthPages from "../../layout/AuthPages/AuthPages";
 import CustomForm from "../../layout/CustomForm";
 
@@ -33,7 +33,7 @@ const SignUpPage = () => {
             "¡Registro exitoso! Redirigiéndote para completar tu perfil...",
           duration: 2,
         });
-        setTimeout(() => navigate(ACCOUNT_ONBOARDING), 2000);
+        setTimeout(() => navigate(ONBOARDING), 2000);
       } else {
         if (result.error === "Email already in use") {
           form.setFields([
@@ -81,7 +81,7 @@ const SignUpPage = () => {
       {contextHolder}
       <CustomForm
         form={form}
-        className="sign-form"
+        className="w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow-md"
         name="sign-form"
         layout="vertical"
         onFinish={createAccount}
@@ -142,7 +142,7 @@ const SignUpPage = () => {
           <Button
             type="primary"
             htmlType="submit"
-            className="submit-button"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
             loading={loading}
             size="large"
           >

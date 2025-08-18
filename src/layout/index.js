@@ -1,99 +1,146 @@
 import { useState } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "../components/Icons";
-import { Button, Input, Layout, Menu } from "antd";
+import { Button, Input, Layout, Menu, Switch } from "antd";
 import {
   AppstoreFilled,
   BellFilled,
   HomeOutlined,
   InboxOutlined,
+  SettingOutlined,
   TagOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-
-import "./layout.scss";
 import useAuth from "../hooks/useAuth";
+import ProfilePill from "./_components/ProfilePill";
 
 const { Header, Content, Sider } = Layout;
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-const items = [
-  getItem("Inicio", "1", <AppstoreFilled />),
-  getItem("Mi tienda", "sub1", <HomeOutlined />, [
-    getItem("Contenido", "3"),
-    getItem("Ajustes", "4"),
-  ]),
-  getItem("Productos", "sub2", <TagOutlined />, [
-    getItem("Item 1", "5"),
-    getItem("Item 2", "6"),
-  ]),
-  getItem("Ordenes", "sub3", <InboxOutlined />, [
-    getItem("Item 1", "7"),
-    getItem("Item 2", "8"),
-  ]),
-  getItem("Clientes", "sub4", <TeamOutlined />, [
-    getItem("Item 1", "9"),
-    getItem("Item 2", "10"),
-  ]),
+const menuItems = [
+  {
+    label: "Inicio",
+    key: "/dashboard",
+    icon: <AppstoreFilled />,
+  },
+  {
+    label: "Mi tienda",
+    key: "/store",
+    icon: <HomeOutlined />,
+    children: [
+      { label: "Contenido", key: "/store/content" },
+      { label: "Ajustes", key: "/store/settings" },
+    ],
+  },
+  {
+    label: "Productos",
+    key: "/products",
+    icon: <TagOutlined />,
+  },
+  {
+    label: "Ordenes",
+    key: "/orders",
+    icon: <InboxOutlined />,
+    children: [
+      { label: "Item 1", key: "/orders/item1" },
+      { label: "Item 2", key: "/orders/item2" },
+    ],
+  },
+  {
+    label: "Clientes",
+    key: "/clients",
+    icon: <TeamOutlined />,
+    children: [
+      { label: "Item 1", key: "/clients/item1" },
+      { label: "Item 2", key: "/clients/item2" },
+    ],
+  },
 ];
 
-const MainLayout = () => {
+const MainLayout = ({ setIsDark, isDark }) => {
   const [collapsed, setCollapsed] = useState(false);
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     await logout();
     navigate("/login");
   };
 
+  const onMenuClick = ({ key }) => {
+    navigate(key);
+  };
+
   return (
-    <Layout className="layout">
+    <Layout className="min-h-screen h-screen bg-[#181A1B]">
       <Sider
         collapsible
-        className="side-menu"
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
+        trigger={null}
         width={250}
+        className="!bg-[#181A1B] border-r border-[#232323]"
       >
-        <Logo className="logo" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={items}
-        />
+        <div className="flex flex-col justify-between h-full p-[36px_24px_24px_24px]">
+          <div className="flex flex-col gap-11">
+            <Logo className="w-auto h-10 self-start" />
+            <Menu
+              theme="dark"
+              mode="inline"
+              selectedKeys={[location.pathname]}
+              items={menuItems}
+              onClick={onMenuClick}
+              className="bg-transparent text-white [&_.ant-menu-item-selected]:!bg-[#49513B] [&_.ant-menu-item-selected]:!text-[#D6E3B3] [&_.ant-menu-item]:!rounded-md"
+            />
+          </div>
+          <Button
+            type="text"
+            icon={<SettingOutlined />}
+            className="h-auto p-3 justify-start !text-gray-400 hover:text-[#D6E3B3]"
+          >
+            <span className="ml-2 hidden md:inline">Settings</span>
+          </Button>
+        </div>
       </Sider>
-      <Layout className="content-layout">
-        <Header className="layout-header">
-          <Input placeholder="Search" />
-          <div className="account-n-actions">
-            <div className="actions">
-              <Button type="text">
-                <BellFilled />
-              </Button>
-            </div>
-            <div className="account-info">
-              <p>Usuario</p>
-            </div>
+      <Layout className="bg-[#181A1B]">
+        <Header className="grid grid-cols-[9fr_auto] gap-6 px-8 py-6 h-auto bg-[#181A1B] border-b border-[#232323]">
+          <Input
+            placeholder="Search"
+            className="flex flex-row gap-3 h-full p-3 bg-transparent border-2 !border-[#383838] text-white placeholder-gray-400 rounded-md focus:bg-transparent"
+            prefix={
+              <span className="anticon">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="M21 21l-4.35-4.35" />
+                </svg>
+              </span>
+            }
+          />
+          <div className="flex items-center justify-end gap-4">
+            {/* <Switch
+              checked={isDark}
+              onChange={setIsDark}
+              checkedChildren="🌙"
+              unCheckedChildren="☀️"
+              className="bg-[#232323]"
+            /> */}
             <Button
-              type="secondary"
-              onClick={handleLogout}
-              style={{ color: "#fff", marginLeft: 8 }}
+              type="text"
+              className="text-gray-400 border-2 border-[#383838] h-full hover:!bg-[#383838] hover:!text-white"
             >
-              Logout
+              <BellFilled />
             </Button>
+            <ProfilePill />
           </div>
         </Header>
-        <Content className="content">
+        <Content className="p-8 overflow-auto bg-[#242424]">
           <Outlet />
         </Content>
       </Layout>
