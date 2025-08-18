@@ -42,10 +42,10 @@ const getErrorMessage = (error) => {
 
 const useAuth = () => {
   const dispatch = useDispatch();
-  const accountInfo = useSelector((state) => state.auth.accountInfo);
+  const accountInfo = useSelector((state) => state.auth);
 
   const isAuthenticated = async () => {
-    if (accountInfo && Object.keys(accountInfo).length > 0) return true;
+    if (accountInfo && accountInfo.id) return true;
 
     try {
       const response = await axiosRequest.get("/auth/me", {

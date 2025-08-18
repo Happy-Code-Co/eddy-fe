@@ -5,7 +5,7 @@ const CustomCheckbox = ({ options, onchange, value }) => {
   return (
     <Checkbox.Group
       options={options}
-      className="custom-checkbox"
+      className="flex flex-col gap-2"
       onChange={onchange}
       value={value}
     />

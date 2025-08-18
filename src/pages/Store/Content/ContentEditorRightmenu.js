@@ -2,10 +2,12 @@ import React from "react";
 
 const ContentEditorRightmenu = () => {
   return (
-    <aside className="content-editor-rightmenu">
-      <div className="rightmenu-section">
-        <span className="rightmenu-title">Section Properties</span>
-        <div className="rightmenu-collapsible">
+    <aside className="w-full max-w-xs bg-white rounded-lg shadow-md p-4">
+      <div className="mb-4">
+        <span className="block text-lg font-semibold text-gray-700 mb-2">
+          Section Properties
+        </span>
+        <div className="space-y-2">
           <details>
             <summary>Section Style</summary>
             {/* Inputs for Section Style will go here */}

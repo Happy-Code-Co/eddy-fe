@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./index.scss";
+import { Table, Input, Tabs, Tag, Pagination } from "antd";
+import { PlusOutlined, ExportOutlined } from "@ant-design/icons";
+import OutlinedButton from "../../components/OutlinedButton";
+import PrimaryButton from "../../components/PrimaryButton";
 
 const TABS = [
-  { label: "Todos", value: "all" },
-  { label: "Activos", value: "active" },
-  { label: "Borradores", value: "draft" },
+  { label: "Todos", key: "all" },
+  { label: "Activos", key: "active" },
+  { label: "Borradores", key: "draft" },
 ];
 
 const PRODUCTS = [
@@ -94,6 +97,8 @@ const PRODUCTS = [
 export default function ProductsPage() {
   const [tab, setTab] = useState("all");
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const navigate = useNavigate();
 
   const filtered = PRODUCTS.filter(
@@ -104,84 +109,85 @@ export default function ProductsPage() {
         p.sku.toLowerCase().includes(search.toLowerCase()))
   );
 
+  const columns = [
+    { title: "SKU", dataIndex: "sku", key: "sku" },
+    { title: "Nombre de producto", dataIndex: "name", key: "name" },
+    {
+      title: "Estado",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => (
+        <Tag color={status === "Activo" ? "green" : "default"}>{status}</Tag>
+      ),
+    },
+    {
+      title: "Inventario",
+      dataIndex: "inventory",
+      key: "inventory",
+      render: (inv) => (
+        <span
+          style={{ color: inv === "Sin existencias" ? "#e74c3c" : undefined }}
+        >
+          {inv}
+        </span>
+      ),
+    },
+    { title: "Canal de venta", dataIndex: "channel", key: "channel" },
+    { title: "Mercado", dataIndex: "market", key: "market" },
+  ];
+
   return (
-    <div className="products-page">
-      <div className="products-header">
-        <h2>Productos</h2>
-        <div className="products-header-actions">
-          <button className="export-btn">Exportar</button>
-          <button className="add-btn" onClick={() => navigate('/products/add')}>Agregar producto</button>
+    <>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+        <h2 className="text-2xl font-semibold text-white mb-2 md:mb-0">
+          Productos
+        </h2>
+        <div className="flex gap-2">
+          <OutlinedButton icon={<ExportOutlined />}>Exportar</OutlinedButton>
+          <PrimaryButton
+            icon={<PlusOutlined />}
+            onClick={() => navigate("/products/add")}
+          >
+            Agregar producto
+          </PrimaryButton>
         </div>
       </div>
-      <div className="products-tabs">
-        {TABS.map((t) => (
-          <button
-            key={t.value}
-            className={tab === t.value ? "active" : ""}
-            onClick={() => setTab(t.value)}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-      <div className="products-table-controls">
-        <input
-          className="search-bar"
+      <Tabs
+        activeKey={tab}
+        onChange={setTab}
+        items={TABS.map((t) => ({ label: t.label, key: t.key }))}
+        className="mb-4"
+      />
+      <div className="flex justify-between items-center mb-4">
+        <Input.Search
+          className="w-60"
           placeholder="Buscar producto"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-      <div className="products-table-wrapper">
-        <table className="products-table">
-          <thead>
-            <tr>
-              <th>SKU</th>
-              <th>Nombre de producto</th>
-              <th>Estado</th>
-              <th>Inventario</th>
-              <th>Canal de venta</th>
-              <th>Mercado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((p, i) => (
-              <tr key={p.sku + i}>
-                <td>{p.sku}</td>
-                <td>{p.name}</td>
-                <td>
-                  <span
-                    className={
-                      p.status === "Activo" ? "status-active" : "status-draft"
-                    }
-                  >
-                    {p.status}
-                  </span>
-                </td>
-                <td
-                  className={
-                    p.inventory === "Sin existencias" ? "out-of-stock" : ""
-                  }
-                >
-                  {p.inventory}
-                </td>
-                <td>{p.channel}</td>
-                <td>{p.market}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <Table
+        columns={columns}
+        dataSource={filtered
+          .slice((page - 1) * pageSize, page * pageSize)
+          .map((p, i) => ({ ...p, key: p.sku + i }))}
+        pagination={false}
+        className="mb-4 bg-transparent"
+      />
+      <div className="flex justify-center mb-2">
+        <Pagination
+          current={page}
+          pageSize={pageSize}
+          total={filtered.length}
+          onChange={setPage}
+          showSizeChanger={false}
+        />
       </div>
-      <div className="products-pagination">
-        <button className="page-btn active">1</button>
-        <button className="page-btn">2</button>
-        <button className="page-btn">3</button>
-        <span>...</span>
-        <button className="page-btn">13</button>
+      <div className="text-sm text-gray-500 text-center">
+        Mostrando del {filtered.length === 0 ? 0 : (page - 1) * pageSize + 1} al{" "}
+        {Math.min(page * pageSize, filtered.length)} de {filtered.length}{" "}
+        entradas
       </div>
-      <div className="products-footer">
-        Mostrando del 1 al 10 de 135 entradas
-      </div>
-    </div>
+    </>
   );
 }

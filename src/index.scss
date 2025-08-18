@@ -1,35 +1,60 @@
-@use "./styles/global" as *;
-@use "./styles/variables" as *;
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-html,
-body {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Override Ant Design Input focus/hover background and text color */
+:where(.ant-input):focus,
+:where(.ant-input):hover,
+:where(.ant-input-affix-wrapper):focus-within,
+:where(.ant-input-affix-wrapper):hover {
+  box-shadow: none !important;
+  background-color: #232323 !important;
+  color: #fff !important;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ol,
-ul {
-  margin: 0;
+/* Input placeholder color (white with opacity) */
+:where(.ant-input)::placeholder,
+:where(.ant-input-affix-wrapper) input::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+  opacity: 1 !important;
 }
 
-h1 {
-  @include h1;
+:where(.css-dev-only-do-not-override-l9pxc0).ant-table-wrapper .ant-table {
+  background: transparent !important;
 }
 
-h2 {
-  @include h2;
+:where(.css-dev-only-do-not-override-l9pxc0).ant-table-wrapper
+  .ant-table-thead
+  > tr
+  > th,
+:where(.css-dev-only-do-not-override-l9pxc0).ant-table-wrapper
+  .ant-table-thead
+  > tr
+  > td {
+  background: transparent !important;
 }
 
-h6 {
-  @include h6;
+:where(.css-dev-only-do-not-override-l9pxc0).ant-table-wrapper
+  .ant-table-tbody
+  .ant-table-row {
+  color: white !important;
+  border-color: #383838 !important;
+}
+
+:where(.css-dev-only-do-not-override-l9pxc0).ant-table-wrapper
+  .ant-table-tbody
+  > tr
+  > th,
+:where(.css-dev-only-do-not-override-l9pxc0).ant-table-wrapper
+  .ant-table-tbody
+  > tr
+  > td {
+  border-bottom: none !important;
+}
+
+:where(.css-dev-only-do-not-override-l9pxc0).ant-table-wrapper
+  .ant-table-tbody
+  .ant-table-row
+  > .ant-table-cell-row-hover {
+  background: #383838 !important;
 }

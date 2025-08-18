@@ -2,7 +2,7 @@ import { message, Upload } from "antd";
 import Dragger from "antd/es/upload/Dragger";
 import classNames from "classnames";
 import UploadIcon from "../../assets/ui/Upload.svg";
-import "./CustomDragger.scss";
+
 import { useState, useEffect } from "react";
 
 const CustomDragger = ({ value, onChange, name }) => {
@@ -64,7 +64,10 @@ const CustomDragger = ({ value, onChange, name }) => {
   const props = {
     name,
     multiple: false,
-    className: classNames("custom-dragger", "ant-upload-dragger"),
+    className: classNames(
+      "border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 flex flex-col items-center justify-center w-full",
+      "ant-upload-dragger"
+    ),
     showUploadList: false,
     beforeUpload,
     accept: ".svg,.png,.jpg,.jpeg,.gif",
@@ -74,21 +77,23 @@ const CustomDragger = ({ value, onChange, name }) => {
     <div>
       <Dragger {...props}>
         {previewImage ? (
-          <div className="preview-container">
+          <div className="flex flex-col items-center mb-4">
             <img
               src={previewImage}
               alt="Preview"
-              className="preview-image"
+              className="object-contain max-h-52 mb-2 rounded shadow"
               style={{ maxWidth: "100%", maxHeight: "200px" }}
             />
           </div>
         ) : (
           <>
-            <p className="ant-upload-drag-icon">
-              <img src={UploadIcon} alt="Upload Icon" />
+            <p className="flex justify-center mb-2">
+              <img src={UploadIcon} alt="Upload Icon" className="w-10 h-10" />
             </p>
-            <p className="ant-upload-text">Haz click para subir</p>
-            <p className="ant-upload-hint">
+            <p className="text-blue-600 font-medium mb-1">
+              Haz click para subir
+            </p>
+            <p className="text-xs text-gray-500">
               Solo se permite subir un archivo. Formatos permitidos:
               <br />
               <span>SVG, PNG, JPG o GIF (max. 800x400px)</span>
@@ -97,9 +102,9 @@ const CustomDragger = ({ value, onChange, name }) => {
         )}
       </Dragger>
       {previewImage && (
-        <div className="preview-actions">
+        <div className="flex justify-center mt-2">
           <button
-            className="remove-button"
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded shadow"
             onClick={() => {
               setPreviewImage(null);
               onChange?.(null);
@@ -110,7 +115,7 @@ const CustomDragger = ({ value, onChange, name }) => {
         </div>
       )}
       {error && (
-        <div className="ant-upload-error-message">
+        <div className="text-red-600 text-sm mt-2">
           <span>{error}</span>
         </div>
       )}
