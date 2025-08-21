@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Table, Input, Tabs, Tag, Pagination } from "antd";
-import { PlusOutlined, ExportOutlined } from "@ant-design/icons";
+import { Table, Input, Tag, Pagination } from "antd";
+import {
+  PlusOutlined,
+  ExportOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import OutlinedButton from "../../components/OutlinedButton";
 import PrimaryButton from "../../components/PrimaryButton";
+import MainInput from "../../components/MainInput";
 
 const TABS = [
   { label: "Todos", key: "all" },
@@ -98,7 +103,7 @@ export default function ProductsPage() {
   const [tab, setTab] = useState("all");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize] = useState(10);
   const navigate = useNavigate();
 
   const filtered = PRODUCTS.filter(
@@ -137,34 +142,45 @@ export default function ProductsPage() {
   ];
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-        <h2 className="text-2xl font-semibold text-white mb-2 md:mb-0">
-          Productos
-        </h2>
-        <div className="flex gap-2">
-          <OutlinedButton icon={<ExportOutlined />}>Exportar</OutlinedButton>
-          <PrimaryButton
-            icon={<PlusOutlined />}
-            onClick={() => navigate("/products/add")}
-          >
-            Agregar producto
-          </PrimaryButton>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-row items-center justify-between w-full">
+          <h2 className="text-2xl font-semibold text-white">Productos</h2>
+          <div className="flex gap-3 order-2 md:order-1">
+            <OutlinedButton icon={<ExportOutlined />}>Exportar</OutlinedButton>
+            <PrimaryButton
+              icon={<PlusOutlined />}
+              onClick={() => navigate("/products/add")}
+            >
+              Agregar producto
+            </PrimaryButton>
+          </div>
         </div>
-      </div>
-      <Tabs
-        activeKey={tab}
-        onChange={setTab}
-        items={TABS.map((t) => ({ label: t.label, key: t.key }))}
-        className="mb-4"
-      />
-      <div className="flex justify-between items-center mb-4">
-        <Input.Search
-          className="w-60"
-          placeholder="Buscar producto"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="flex flex-row items-center justify-between w-full">
+          <div className="flex gap-2">
+            {TABS.map((t) => (
+              <button
+                key={t.key}
+                onClick={() => setTab(t.key)}
+                className={`px-4 py-2 rounded-md border text-sm font-medium transition-colors duration-150 ${
+                  tab === t.key
+                    ? "bg-[#BAC887] text-[#181A1B] border-[#BAC887]"
+                    : "bg-transparent text-white border-[#343434] hover:bg-[#232323]"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+          <MainInput
+            className="w-60 self-end"
+            placeholder="Buscar producto"
+            value={search}
+            prefix={<SearchOutlined />}
+            onChange={(e) => setSearch(e.target.value)}
+            allowClear
+          />
+        </div>
       </div>
       <Table
         columns={columns}
@@ -188,6 +204,6 @@ export default function ProductsPage() {
         {Math.min(page * pageSize, filtered.length)} de {filtered.length}{" "}
         entradas
       </div>
-    </>
+    </div>
   );
 }

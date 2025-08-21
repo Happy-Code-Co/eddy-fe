@@ -10,13 +10,10 @@ import {
   Tabs,
   Tag,
   Space,
-  message,
 } from "antd";
-import {
-  ArrowLeftOutlined,
-  PlusOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import { ArrowLeftOutlined, PlusOutlined } from "@ant-design/icons";
+import PrimaryButton from "../../components/PrimaryButton";
+import OutlinedButton from "../../components/OutlinedButton";
 
 const TABS = [
   { label: "Información del producto", key: "info" },
@@ -386,19 +383,22 @@ export default function AddProduct() {
   return (
     <div className="bg-white dark:bg-neutral-900 min-h-screen p-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-        <div className="flex items-center mb-4 md:mb-0">
+        <div className="flex flex-row gap-2 items-center ">
           <Button
-            icon={<ArrowLeftOutlined />}
             onClick={() => navigate("/products")}
-            className="mr-3"
-          />
-          <h2 className="text-2xl font-semibold m-0">Agregar producto</h2>
+            className="text-gray-400 border-0 bg-transparent hover:!bg-[#383838] hover:!text-white"
+          >
+            <ArrowLeftOutlined />
+          </Button>
+          <h2 className="text-2xl font-semibold text-white">
+            Agregar producto
+          </h2>
         </div>
         <Space>
-          <Button className="border-gray-300 dark:border-neutral-700">
+          <OutlinedButton className="border-gray-300 dark:border-neutral-700">
             Guardar como borrador
-          </Button>
-          <Button type="primary">Publicar producto</Button>
+          </OutlinedButton>
+          <PrimaryButton type="primary">Publicar producto</PrimaryButton>
         </Space>
       </div>
       <div className="flex items-center mb-8">

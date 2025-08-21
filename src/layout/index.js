@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "../components/Icons";
-import { Button, Input, Layout, Menu, Switch } from "antd";
+import { Button, Layout, Menu, Switch } from "antd";
 import {
   AppstoreFilled,
   BellFilled,
   HomeOutlined,
   InboxOutlined,
+  SearchOutlined,
   SettingOutlined,
   TagOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
 import useAuth from "../hooks/useAuth";
+import MainInput from "../components/MainInput";
 import ProfilePill from "./_components/ProfilePill";
 
 const { Header, Content, Sider } = Layout;
@@ -104,25 +106,7 @@ const MainLayout = ({ setIsDark, isDark }) => {
       </Sider>
       <Layout className="bg-[#181A1B]">
         <Header className="grid grid-cols-[9fr_auto] gap-6 px-8 py-6 h-auto bg-[#181A1B] border-b border-[#232323]">
-          <Input
-            placeholder="Search"
-            className="flex flex-row gap-3 h-full p-3 bg-transparent border-2 !border-[#383838] text-white placeholder-gray-400 rounded-md focus:bg-transparent"
-            prefix={
-              <span className="anticon">
-                <svg
-                  width="16"
-                  height="16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="M21 21l-4.35-4.35" />
-                </svg>
-              </span>
-            }
-          />
+          <MainInput placeholder="Buscar" prefix={<SearchOutlined />} />
           <div className="flex items-center justify-end gap-4">
             {/* <Switch
               checked={isDark}
