@@ -13,7 +13,6 @@ import ContentEditorBody from "./ContentEditorBody";
 import ContentEditorRightmenu from "./ContentEditorRightmenu";
 import DeletePageModal from "./DeletePageModal";
 import AddSectionModal from "./AddSectionModal";
-import "./ContentEditor.scss";
 
 const ContentEditor = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -53,12 +52,21 @@ const ContentEditor = ({ onClose }) => {
   // All modal and section logic should be handled in Redux or in the respective components for full compliance.
 
   return (
-    <div className="content-editor-fullscreen">
+    <div className="w-full h-screen flex flex-col bg-[#181A1B]">
       <ContentEditorTopbar onClose={onClose} />
-      <div className="content-editor-main">
-        <ContentEditorSidemenu />
-        <ContentEditorBody />
-        <ContentEditorRightmenu />
+      <div className="flex flex-1 min-h-0">
+        {/* Sidebar */}
+        <div className="w-[260px] bg-[#20211F] border-r border-[#232323] flex flex-col">
+          <ContentEditorSidemenu />
+        </div>
+        {/* Main content area */}
+        <div className="flex-1 flex flex-col min-w-0 bg-[#1A1A1A] p-6 overflow-auto">
+          <ContentEditorBody />
+        </div>
+        {/* Right menu */}
+        <div className="w-[320px] bg-[#20211F] border-l border-[#232323] flex flex-col">
+          <ContentEditorRightmenu />
+        </div>
       </div>
       <DeletePageModal
         open={deleteModalVisible}
