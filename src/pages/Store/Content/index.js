@@ -7,12 +7,13 @@ import {
   setDeleteModalVisible,
   setDeletingPageId,
 } from "../../../redux/slices/StoreSlice";
-import ContentEditorTopbar from "./ContentEditorTopbar";
-import ContentEditorSidemenu from "./ContentEditorSidemenu";
-import ContentEditorBody from "./ContentEditorBody";
-import ContentEditorRightmenu from "./ContentEditorRightmenu";
-import DeletePageModal from "./DeletePageModal";
-import AddSectionModal from "./AddSectionModal";
+
+import ContentEditorTopbar from "./layout/ContentEditorTopbar";
+import ContentEditorSidemenu from "./layout/ContentEditorSidemenu";
+import ContentEditorBody from "./layout/ContentEditorBody";
+import ContentEditorRightmenu from "./layout/ContentEditorRightmenu";
+import DeletePageModal from "./layout/modals/DeletePageModal";
+import AddSectionModal from "./layout/modals/AddSectionModal";
 
 const ContentEditor = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const ContentEditor = ({ onClose }) => {
           <ContentEditorSidemenu />
         </div>
         {/* Main content area */}
-        <div className="flex-1 flex flex-col min-w-0 bg-[#1A1A1A] p-6 overflow-auto">
+        <div className="flex-1 flex flex-col min-w-0 h-full bg-[#1A1A1A] p-8 overflow-auto">
           <ContentEditorBody />
         </div>
         {/* Right menu */}

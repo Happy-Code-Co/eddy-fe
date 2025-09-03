@@ -13,6 +13,8 @@ export const StoreSlice = createSlice({
     deleteModalVisible: false,
     deletingPageId: null,
     addSectionModalVisible: false,
+    selectedComponent: null,
+    selectedGridItem: null, // { sectionId, itemIndex }
     // Add more modal/section state as needed
     /* created_at: null,
   updated_at: null, */
@@ -31,9 +33,6 @@ export const StoreSlice = createSlice({
     setPages: (state, action) => {
       state.pages = action.payload;
     },
-    addPage: (state, action) => {
-      state.pages.push(action.payload);
-    },
     setSelectedPage: (state, action) => {
       state.selectedPage = action.payload;
     },
@@ -46,6 +45,12 @@ export const StoreSlice = createSlice({
     setAddSectionModalVisible: (state, action) => {
       state.addSectionModalVisible = action.payload;
     },
+    setSelectedComponent: (state, action) => {
+      state.selectedComponent = action.payload;
+    },
+    setSelectedGridItem: (state, action) => {
+      state.selectedGridItem = action.payload; // { sectionId, itemIndex }
+    },
   },
 });
 
@@ -53,11 +58,12 @@ export const StoreSlice = createSlice({
 export const {
   setStoreInfo,
   setPages,
-  addPage,
   setSelectedPage,
   setDeleteModalVisible,
   setDeletingPageId,
   setAddSectionModalVisible,
+  setSelectedComponent,
+  setSelectedGridItem,
 } = StoreSlice.actions;
 
 export default StoreSlice.reducer;

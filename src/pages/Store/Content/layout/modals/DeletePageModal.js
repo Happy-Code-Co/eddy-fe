@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setPages as setPagesRedux,
   setSelectedPage as setSelectedPageRedux,
-} from "../../../redux/slices/StoreSlice";
-import React from "react";
-import axios from "../../../axiosInterceptor";
+} from "../../../../../redux/slices/StoreSlice";
+import axios from "../../../../../axiosInterceptor";
 
 const DeletePageModal = ({ open, deletingPageId, onClose }) => {
   const dispatch = useDispatch();

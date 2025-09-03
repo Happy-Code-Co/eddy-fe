@@ -7,6 +7,7 @@ import useAuth from "../../hooks/useAuth";
 
 import CustomForm from "../../layout/CustomForm";
 import AuthPages from "../../layout/AuthPages/AuthPages";
+import MainInput from "../../components/MainInput";
 
 const SigninPage = () => {
   const { login, isAuthenticated } = useAuth();
@@ -105,10 +106,7 @@ const SigninPage = () => {
             },
           ]}
         >
-          <Input
-            placeholder="Ingresa tu correo electrónico"
-            className="bg-transparent hover:bg-[#383838] focus:bg-[#383838] text-white"
-          />
+          <MainInput placeholder="Ingresa tu correo electrónico" />
         </Form.Item>
 
         <Form.Item
@@ -128,7 +126,7 @@ const SigninPage = () => {
             },
           ]}
         >
-          <Input.Password placeholder="Ingresa tu contraseña" />
+          <MainInput type="password" placeholder="Ingresa tu contraseña" />
         </Form.Item>
 
         <Form.Item>
